@@ -8,9 +8,11 @@ import "dotenv/config";
 
 const app = express();
 
+const deployed = process.env.ENV !== "local";
+
 app.get("/", (_req, res) => {
   const app = ReactDOMServer.renderToString(React.createElement(App));
-  const indexFile = path.resolve("./build/index.html");
+  const indexFile = path.join(__dirname, "index.html");
 
   fs.readFile(indexFile, "utf8", (err, data) => {
     if (err) {
@@ -24,7 +26,7 @@ app.get("/", (_req, res) => {
   });
 });
 
-app.use(express.static("./build"));
+app.use(express.static("./"));
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is running on port ${process.env.PORT}`)
