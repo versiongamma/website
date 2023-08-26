@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node dev/webpack-serve.mjs",
     "start": "concurrently \"yarn build --watch\" \"nodemon build/server.js\"",
-    "build": "node esbuild.config.mjs"
+    "build": "rm -rf build && node esbuild.config.mjs"
   },
   "dependencies": {
     "express": "4.18.2",

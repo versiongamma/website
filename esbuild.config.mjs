@@ -12,8 +12,8 @@ const buildServer = async () => {
   });
 };
 
-const exampleOnResolvePlugin = {
-  name: "example",
+const onBuildPlugin = {
+  name: "onBuild",
   setup(build) {
     build.onStart(() => {
       console.log("Build started");
@@ -28,16 +28,17 @@ const exampleOnResolvePlugin = {
 
 const watch = process.argv.includes("--watch");
 
-const context = await esbuild.context({
+const config = {
   sourcemap: true,
   entryPoints: ["src/index.tsx"],
   bundle: true,
   outdir: "build/",
-  plugins: [exampleOnResolvePlugin],
-});
+  plugins: [onBuildPlugin],
+};
 
 if (watch) {
+  const context = await esbuild.context(config);
   await context.watch();
+} else {
+  esbuild.build(config);
 }
-
-context.dispose();
