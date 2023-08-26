@@ -1,17 +1,17 @@
 {
-    "version": 2,
-    
-    "buildCommand": "yarn build",
-    "builds": [
-      {
-        "src": "build/server.js",
-        "use": "@now/node"
-      }
-    ],
-    "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "build/server.js"
-        }
-      ]
-  }
+  "version": 2,
+  "buildCommand": "npm run build",
+  "builds": [
+    {
+      "src": "build/server.js",
+      "use": "@now/node"
+    }
+  ],
+
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "build/server.js"
+    }
+  ]
+}

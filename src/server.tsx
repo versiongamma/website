@@ -4,6 +4,7 @@ import ReactDOMServer from "react-dom/server";
 import { App } from "./app";
 import path from "path";
 import fs from "fs";
+import "dotenv/config";
 
 const app = express();
 
@@ -25,4 +26,6 @@ app.get("/", (_req, res) => {
 
 app.use(express.static("./build"));
 
-app.listen(4000, () => console.log("Server is running on port 4000"));
+app.listen(process.env.PORT, () =>
+  console.log(`Server is running on port ${process.env.PORT}`)
+);
