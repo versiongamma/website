@@ -9,6 +9,7 @@ const buildServer = async () => {
     outdir: "build/",
     platform: "node",
     bundle: true,
+    minify: true,
   });
 };
 
@@ -29,10 +30,11 @@ const onBuildPlugin = {
 const watch = process.argv.includes("--watch");
 
 const config = {
-  sourcemap: true,
+  sourcemap: watch,
   entryPoints: ["src/index.tsx"],
   bundle: true,
-  outdir: "build/",
+  minify: true,
+  outdir: "build/src",
   plugins: [onBuildPlugin],
 };
 

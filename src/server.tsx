@@ -1,6 +1,6 @@
 import express from "express";
 import React from "react";
-import ReactDOMServer from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import { App } from "./app";
 import path from "path";
 import fs from "fs";
@@ -8,11 +8,10 @@ import "dotenv/config";
 
 const app = express();
 
-const deployed = process.env.ENV !== "local";
-
 app.get("/", (_req, res) => {
-  const app = ReactDOMServer.renderToString(React.createElement(App));
+  const app = renderToString(React.createElement(App));
   const indexFile = path.join(__dirname, "index.html");
+  console.log(indexFile);
 
   fs.readFile(indexFile, "utf8", (err, data) => {
     if (err) {
@@ -26,7 +25,7 @@ app.get("/", (_req, res) => {
   });
 });
 
-app.use(express.static("./"));
+app.use('/', express.static(path.join(__dirname, "/")));
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is running on port ${process.env.PORT}`)
