@@ -1,7 +1,5 @@
 import * as esbuild from "esbuild";
-import fs from "fs";
-
-fs.cp("public/", "build/", { recursive: true }, () => {});
+import { cp as copy } from "fs";
 
 const buildServer = async () => {
   await esbuild.build({
@@ -19,6 +17,8 @@ const onBuildPlugin = {
     build.onStart(() => {
       console.log("Build started");
       buildServer();
+      // Copy static assets into build directory
+      copy("public/", "build/public", { recursive: true }, () => {});
     });
 
     build.onEnd(() => {
@@ -34,7 +34,7 @@ const config = {
   entryPoints: ["src/index.tsx"],
   bundle: true,
   minify: true,
-  outdir: "build/src",
+  outdir: "build/public/src",
   plugins: [onBuildPlugin],
 };
 
