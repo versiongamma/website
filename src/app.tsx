@@ -1,23 +1,10 @@
-import { useState } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import "./app.css";
+import { routes } from "./pages/routes";
+
+const router = createBrowserRouter(routes);
 
 export const App = () => {
-  const [count, setCount] = useState(0);
-  return (
-    <div className="w-screen h-screen flex items-center flex-col justify-center">
-      <div className="space-y-2 flex items-center flex-col">
-        <h1 className="font-bold font-heading text-4xl animate-slideIn">
-          VERSION GAMMA
-        </h1>
-        <p>This is a work in progress.</p>
-        <p>{count}</p>
-        <button
-          className="m-2 p-2 bg-slate-700 text-white rounded-xl hover:bg-slate-500 transition-colors"
-          onClick={() => setCount(count + 1)}
-        >
-          Count
-        </button>
-      </div>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };

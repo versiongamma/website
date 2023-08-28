@@ -13,14 +13,16 @@ const webpackConfig = {
       favicon: "public/favicon.ico",
     }),
     new MiniCssExtractPlugin({
-      filename: "index.css",
+      filename: "src/index.css",
       chunkFilename: "index.css",
     }),
   ],
   devServer: {
     port: 4000,
     headers: {},
+    historyApiFallback: true,
   },
+
   mode: "development",
   module: {
     rules: [
@@ -40,6 +42,7 @@ const webpackConfig = {
   },
   output: {
     filename: "src/index.js",
+    publicPath: "/",
   },
 };
 

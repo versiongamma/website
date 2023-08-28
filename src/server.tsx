@@ -1,18 +1,83 @@
-import express, { static as expressStatic } from "express";
+import "dotenv/config";
+import express, { Request as ExpressRequest } from "express";
+import { readFile } from "fs";
+import path from "path";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import { join as pathJoin } from "path";
-import { readFile } from "fs";
-import "dotenv/config";
+import {
+  StaticHandlerContext,
+  StaticRouterProvider,
+  createStaticHandler,
+  createStaticRouter,
+} from "react-router-dom/server";
 
-import { App } from "./app";
+import { routes } from "./pages/routes";
+
+const createFetchRequest = (req: ExpressRequest) => {
+  let origin = `${req.protocol}://${req.get("host")}`;
+  let url = new URL(req.originalUrl || req.url, origin);
+
+  let controller = new AbortController();
+  req.on("close", () => controller.abort());
+
+  let headers = new Headers();
+
+  for (let [key, values] of Object.entries(req.headers)) {
+    if (values) {
+      if (Array.isArray(values)) {
+        for (let value of values) {
+          headers.append(key, value);
+        }
+      } else {
+        headers.set(key, values);
+      }
+    }
+  }
+
+  let init: RequestInit = {
+    method: req.method,
+    headers,
+    signal: controller.signal,
+  };
+
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    init.body = req.body;
+  }
+
+  return new Request(url.href, init);
+};
 
 const app = express();
+const handler = createStaticHandler(routes);
 
-app.get("/", (_req, res) => {
-  const app = renderToString(createElement(App));
-  const indexFile = pathJoin(__dirname, "public/index.html");
-  console.log(indexFile);
+app.set("trust proxy", true);
+
+// Serve static files (any request for a path with a file extension)
+app.get(/.*\..*/, (req, res) => {
+  const requestedFilePath =
+    req.path[req.path.length - 1] === "/" ? req.path.slice(0, -1) : req.path;
+  const filePath = path.join(__dirname, `public/${requestedFilePath}`);
+
+  console.log(requestedFilePath);
+  res.sendFile(filePath);
+});
+
+// Serve site pages
+app.get("*", async (req, res) => {
+  console.log(
+    `Route [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
+  );
+
+  const fetchRequest = createFetchRequest(req);
+  const context = (await handler.query(fetchRequest)) as StaticHandlerContext;
+
+  let router = createStaticRouter(handler.dataRoutes, context);
+
+  const app = renderToString(
+    createElement(StaticRouterProvider, { router, context })
+  );
+
+  const indexFile = path.join(__dirname, "public/index.html");
 
   readFile(indexFile, "utf8", (err, data) => {
     if (err) {
@@ -26,8 +91,8 @@ app.get("/", (_req, res) => {
   });
 });
 
-app.use('/', expressStatic(pathJoin(__dirname, "/public")));
-
 app.listen(process.env.PORT, () =>
-  console.log(`⚡️ Site is now live, server running on port ${process.env.PORT}`)
+  console.log(
+    `⚡️ Site is now live, server running on port ${process.env.PORT}`
+  )
 );
