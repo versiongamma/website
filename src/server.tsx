@@ -58,13 +58,14 @@ app.get(/.*\..*/, (req, res) => {
     req.path[req.path.length - 1] === "/" ? req.path.slice(0, -1) : req.path;
   const filePath = path.join(__dirname, `public/${requestedFilePath}`);
 
-  console.log(requestedFilePath);
+  console.log(`Serving [${requestedFilePath}]`);
   res.sendFile(filePath);
 });
 
 // Serve site pages
 app.get("*", async (req, res) => {
   console.log(
+    "\x1b[36m%s\x1b[0m",
     `Route [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
   );
 
@@ -85,6 +86,7 @@ app.get("*", async (req, res) => {
       return res.status(500).send("Oops, better luck next time!");
     }
 
+    console.log(`Serving [${req.url}]`);
     return res.send(
       data.replace('<div id="root"></div>', `<div id="root">${app}</div>`)
     );
