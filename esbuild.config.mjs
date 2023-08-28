@@ -1,5 +1,8 @@
 import * as esbuild from "esbuild";
 import { cp as copy } from "fs";
+import postCssPlugin from "esbuild-style-plugin";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 const buildServer = async () => {
   await esbuild.build({
@@ -10,19 +13,19 @@ const buildServer = async () => {
     minify: true,
   });
 
-  console.log('\t└── ✔ Successfully built server');
+  console.log("\t└── ✔ Successfully built server");
 };
 
 const copyPublicDir = () => {
   copy("public/", "build/public", { recursive: true }, (error) => {
-    if(error) {
+    if (error) {
       console.error(`✘ ${error.message}`);
       throw new Error(error);
     }
 
-    console.log('\t├── ✔ Successfully copied public directory');
+    console.log("\t├── ✔ Successfully copied public directory");
   });
-}
+};
 
 const onBuildPlugin = {
   name: "onBuild",
@@ -34,8 +37,8 @@ const onBuildPlugin = {
     });
 
     build.onEnd(() => {
-      console.time
-      console.log('✅ Build finished');
+      console.time;
+      console.log("✅ Build finished");
     });
   },
 };
@@ -49,13 +52,20 @@ const config = {
   bundle: true,
   minify: true,
   outdir: "build/public/src",
-  plugins: [onBuildPlugin],
+  plugins: [
+    onBuildPlugin,
+    postCssPlugin({
+      postcss: {
+        plugins: [tailwindcss, autoprefixer],
+      },
+    }),
+  ],
 };
 
 if (watch) {
   const context = await esbuild.context(config);
   await context.watch();
-  console.log('🔄 Watching for changes...')
+  console.log("🔄 Watching for changes...");
 } else {
   esbuild.build(config);
 }

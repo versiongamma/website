@@ -1,6 +1,7 @@
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const webpackConfig = {
   devtool: "source-map",
@@ -9,7 +10,11 @@ const webpackConfig = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "public/index.html",
-      favicon: "./public/favicon.ico",
+      favicon: "public/favicon.ico",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "index.css",
+      chunkFilename: "index.css",
     }),
   ],
   devServer: {
@@ -24,13 +29,17 @@ const webpackConfig = {
         use: "esbuild-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+      },
     ],
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "index.js",
+    filename: "src/index.js",
   },
 };
 
