@@ -5,7 +5,7 @@
   "author": "veriongamma <37131904+versiongamma@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "server": "concurrently \"yarn build --watch\" \"nodemon build/server.js\"",
+    "server": "concurrently \"yarn build --watch --sourcemap\" \"nodemon build/server.js\"",
     "dev": "node dev/webpack-serve.mjs",
     "start": "node build/server.js",
     "build": "rm -rf build && node esbuild.config.mjs"

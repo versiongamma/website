@@ -9,28 +9,42 @@ const buildServer = async () => {
     bundle: true,
     minify: true,
   });
+
+  console.log('\t└── ✔ Successfully built server');
 };
+
+const copyPublicDir = () => {
+  copy("public/", "build/public", { recursive: true }, (error) => {
+    if(error) {
+      console.error(`✘ ${error.message}`);
+      throw new Error(error);
+    }
+
+    console.log('\t├── ✔ Successfully copied public directory');
+  });
+}
 
 const onBuildPlugin = {
   name: "onBuild",
-  setup(build) {
-    build.onStart(() => {
-      console.log("Build started");
-      buildServer();
-      // Copy static assets into build directory
-      copy("public/", "build/public", { recursive: true }, () => {});
+  setup: (build) => {
+    build.onStart(async () => {
+      console.log("🚀 Build started...");
+      copyPublicDir();
+      await buildServer();
     });
 
     build.onEnd(() => {
-      console.log("Build finished");
+      console.time
+      console.log('✅ Build finished');
     });
   },
 };
 
 const watch = process.argv.includes("--watch");
+const sourcemap = process.argv.includes("--sourcemap");
 
 const config = {
-  sourcemap: watch,
+  sourcemap: sourcemap,
   entryPoints: ["src/index.tsx"],
   bundle: true,
   minify: true,
@@ -41,6 +55,7 @@ const config = {
 if (watch) {
   const context = await esbuild.context(config);
   await context.watch();
+  console.log('🔄 Watching for changes...')
 } else {
   esbuild.build(config);
 }

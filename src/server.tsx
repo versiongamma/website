@@ -1,5 +1,5 @@
 import express, { static as expressStatic } from "express";
-import React from "react";
+import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { join as pathJoin } from "path";
 import { readFile } from "fs";
@@ -10,7 +10,7 @@ import { App } from "./app";
 const app = express();
 
 app.get("/", (_req, res) => {
-  const app = renderToString(React.createElement(App));
+  const app = renderToString(createElement(App));
   const indexFile = pathJoin(__dirname, "public/index.html");
   console.log(indexFile);
 
@@ -29,5 +29,5 @@ app.get("/", (_req, res) => {
 app.use('/', expressStatic(pathJoin(__dirname, "/public")));
 
 app.listen(process.env.PORT, () =>
-  console.log(`Server is running on port ${process.env.PORT}`)
+  console.log(`⚡️ Site is now live, server running on port ${process.env.PORT}`)
 );
