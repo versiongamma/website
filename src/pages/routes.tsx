@@ -1,13 +1,23 @@
-import Index from ".";
-import Videos from "./videos";
+import IndexPage from ".";
+import PhotoPage from "./photo";
+import SoftwarePage from "./software";
+import VideoPage from "./video";
 
 export const routes = [
   {
     path: "/",
-    element: <Index />,
+    element: <IndexPage />,
   },
   {
     path: "/video",
-    element: <Videos />,
+    element: <VideoPage />,
+  },
+  {
+    path: "/photo",
+    element: <PhotoPage />,
+  },
+  {
+    path: "/software",
+    element: <SoftwarePage />,
   },
 ];
