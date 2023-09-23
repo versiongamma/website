@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { FiArrowDownCircle } from "react-icons/fi";
+import { BiCodeAlt } from "react-icons/bi";
+import { FiArrowDownCircle, FiCamera, FiYoutube } from "react-icons/fi";
 
-import TitleBar from "../components/title-bar";
-import useNavigate from "../hooks/use-navigate";
-import { applyConditionalStyle } from "../utils/style";
 import NavigationBar from "../components/navigation-bar";
-import useViewport from "../hooks/use-viewport";
+import TitleBar from "../components/title-bar";
 import useAnimate from "../hooks/use-animate";
+import useNavigate from "../hooks/use-navigate";
+import { usePageLoadTypeStore } from "../hooks/use-store";
+import useViewport from "../hooks/use-viewport";
+import { applyConditionalStyle } from "../utils/apply";
 
-const TEST_LOAD_TIME = 100;
+const TEST_LOAD_TIME = 0;
 
 const IndexPage = () => {
   const [loaded, setLoaded] = useState(false);
@@ -16,7 +18,7 @@ const IndexPage = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const [navBarHasAppeared, setNavBarHasAppeared] = useState(false);
-  const [showNavBar, hideNavBar, loadNavBar, unloadNavBar] = useAnimate(false);
+  const { setPageToFullLoad, setPageToContentLoad } = usePageLoadTypeStore();
 
   const handleNavigate = () => setUnloaded(true);
 
@@ -28,6 +30,8 @@ const IndexPage = () => {
   const { height: viewportHeight } = useViewport();
 
   useEffect(() => {
+    setPageToFullLoad();
+
     setTimeout(() => {
       setLoaded(true);
     }, TEST_LOAD_TIME);
@@ -39,17 +43,17 @@ const IndexPage = () => {
 
     if (position >= viewportHeight) {
       setNavBarHasAppeared(true);
-      loadNavBar();
+      setPageToContentLoad();
     }
 
     if (position < viewportHeight && navBarHasAppeared) {
-      console.log("what");
-      unloadNavBar();
+      setPageToFullLoad();
     }
   };
 
   const atTopOfPage = scrollPosition === 0;
   const atBottomOfPage = scrollPosition === viewportHeight;
+
   return (
     <>
       <div
@@ -67,7 +71,7 @@ const IndexPage = () => {
             backgroundSize: "cover",
           }}
         >
-          <TitleBar show={loaded} hide={unload}>
+          <TitleBar shown={loaded} unload={unload}>
             <a className="text-link" onClick={navigateToVideo}>
               VIDEOS
             </a>
@@ -88,15 +92,25 @@ const IndexPage = () => {
               infoRef.current?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            <FiArrowDownCircle className="w-20 h-20 text-white animate-bounce" />
+            {/* <FiArrowDownCircle className="w-20 h-20 text-white animate-bounce" /> */}
           </button>
         </div>
+
         <div
           ref={infoRef}
-          className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always"
-        />
+          className={`flex w-screen h-screen overflow-hidden items-center snap-center snap-always background-gradient`}
+        >
+          <div
+            className={applyConditionalStyle(
+              unload,
+              "animate-fadeOut opacity-0"
+            )}
+          >
+            <p>THIS IS SOME CONTENT</p>
+          </div>
+        </div>
       </div>
-      <NavigationBar show={showNavBar} hide={hideNavBar} />
+      {/* <NavigationBar shown={atBottomOfPage} handleNavigate={handleNavigate} /> */}
     </>
   );
 };

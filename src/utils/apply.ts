@@ -9,3 +9,15 @@ export const applyConditionalStyle = (
 
   return alternate ?? "";
 };
+
+export const applyConditionally = <T>(
+  condition: boolean,
+  style: T,
+  alternate?: T
+) => {
+  if (condition) {
+    return style;
+  }
+
+  return alternate ?? undefined;
+};

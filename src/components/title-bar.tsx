@@ -1,52 +1,61 @@
+import { animated, useTrail } from "@react-spring/web";
 import { useEffect } from "react";
 
-import useAnimate from "../hooks/use-animate";
-import { applyConditionalStyle } from "../utils/style";
-
 type Props = {
-  show: boolean;
-  hide: boolean;
+  shown: boolean;
+  unload: boolean;
   children: React.ReactNode;
 };
 
-const TitleBar = ({ show, hide, children }: Props) => {
-  const [showTitle, hideTitle, loadTitle, unloadTitle] = useAnimate(false);
-  const [showLinks, hideLinks, loadLinks, unloadLinks] = useAnimate(false);
+const TitleBar = ({ shown, unload, children }: Props) => {
+  const [trails, api] = useTrail(2, () => ({
+    opacity: 0,
+    x: -25,
+  }));
 
   useEffect(() => {
-    if (show) {
-      setTimeout(() => loadTitle(), 150);
-      setTimeout(() => loadLinks(), 350);
+    if (shown) {
+      setTimeout(() => {
+        api.start({
+          from: {
+            opacity: 0,
+            x: -25,
+          },
+          to: {
+            opacity: 1,
+            x: 0,
+          },
+        });
+      }, 150);
     }
 
-    if (hide) {
-      unloadLinks();
-      setTimeout(() => unloadTitle(), 100);
+    if (unload) {
+      api.start({
+        from: {
+          opacity: 1,
+          x: 0,
+        },
+        to: {
+          opacity: 0,
+          x: -25,
+        },
+      });
     }
-  }, [show, hide]);
+  }, [shown, unload]);
 
   return (
     <div className="m-[300px] relative">
       <div className="absolute h-96 w-1 bg-white rotate-[30deg] translate-x-[-30px] translate-y-[-100px]"></div>
-      <h1
-        className={`font-heading font-bold text-[7rem] text-white ml-[40px] ${applyConditionalStyle(
-          showTitle,
-          "animate-slideIn",
-          "opacity-0"
-        )} ${applyConditionalStyle(hideTitle, "animate-slideOut opacity-0")}`}
+      <animated.h1
+        className={`font-heading font-bold text-[7rem] text-white ml-[40px]`}
+        style={trails[0]}
       >
         VERSION GAMMA
-      </h1>
+      </animated.h1>
       <div>
-        <p
-          className={`text-white text-3xl ${applyConditionalStyle(
-            showLinks,
-            "animate-slideIn",
-            "opacity-0"
-          )} ${applyConditionalStyle(hideLinks, "animate-slideOut opacity-0")}`}
-        >
+        <animated.p className={`text-white text-3xl`} style={trails[1]}>
           making {children}, and more.
-        </p>
+        </animated.p>
       </div>
     </div>
   );

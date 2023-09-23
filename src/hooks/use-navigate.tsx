@@ -8,7 +8,8 @@ const useNavigate = (
   const handleLoadPage = useLinkClickHandler(to);
 
   const navigate = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    animationHandlers?.forEach((handler) => handler(false));
+    console.log(animationHandlers);
+    animationHandlers?.forEach((handler) => handler && handler(false));
 
     if (delay) {
       setTimeout(() => {
