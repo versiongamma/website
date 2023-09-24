@@ -11,8 +11,9 @@ import useNavigate from "../hooks/use-navigate";
 import { usePageLoadTypeStore } from "../hooks/use-store";
 import useViewport from "../hooks/use-viewport";
 import { applyConditionalStyle } from "../utils/apply";
+import Loading from "../components/index/loading";
 
-const MOCK_LOAD_TIME = 500;
+const MOCK_LOAD_TIME = 2000;
 
 type Props = {
   info?: boolean;
@@ -28,8 +29,7 @@ const IndexPage = ({ info }: Props) => {
   const navigate = useReactRouterNavigate();
   const onInfoPage = !!info;
 
-  const { playPageFullLoad, setPageToFullLoad, setPageToContentLoad } =
-    usePageLoadTypeStore();
+  const { playPageFullLoad, setPageToFullLoad } = usePageLoadTypeStore();
 
   const handleNavigate = () => {
     setLoaded(false);
@@ -39,6 +39,7 @@ const IndexPage = ({ info }: Props) => {
   const [navigateToPhoto] = useNavigate("/photo", 500, [handleNavigate]);
   const [navigateToSoftware] = useNavigate("/software", 500, [handleNavigate]);
 
+  const topRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
   const { height: viewportHeight } = useViewport();
 
@@ -87,13 +88,17 @@ const IndexPage = ({ info }: Props) => {
 
   return (
     <>
+      <div>
+        <Loading unload={loaded} hide={onInfoPage} />
+      </div>
       <div
-        className={`snap-y snap-mandatory w-screen h-screen ${applyConditionalStyle(
+        className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
           loaded,
           "overflow-y-auto",
           "overflow-y-hidden"
         )}`}
         onScroll={handleScroll}
+        ref={topRef}
       >
         <ImageBackground
           shown={loaded}

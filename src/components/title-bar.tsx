@@ -33,7 +33,7 @@ const TitleBar = ({ shown, hide, children }: Props) => {
         className={`font-heading font-bold text-[7rem] text-white ml-[40px]`}
         style={trails[0]}
       >
-        HELLO, I'M MATT
+        HEY, I'M MATT
       </animated.h1>
       <div>
         <animated.p className={`text-white text-3xl`} style={trails[1]}>
