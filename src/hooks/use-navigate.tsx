@@ -1,15 +1,10 @@
 import { To, useLinkClickHandler } from "react-router-dom";
 
-const useNavigate = (
-  to: To,
-  delay?: number,
-  animationHandlers?: React.Dispatch<React.SetStateAction<boolean>>[]
-) => {
+const useNavigate = (to: To, delay?: number, handlers?: (() => void)[]) => {
   const handleLoadPage = useLinkClickHandler(to);
 
   const navigate = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    console.log(animationHandlers);
-    animationHandlers?.forEach((handler) => handler && handler(false));
+    handlers?.forEach((handler) => handler && handler());
 
     if (delay) {
       setTimeout(() => {

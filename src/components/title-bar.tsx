@@ -3,45 +3,28 @@ import { useEffect } from "react";
 
 type Props = {
   shown: boolean;
-  unload: boolean;
+  hide: boolean;
   children: React.ReactNode;
 };
 
-const TitleBar = ({ shown, unload, children }: Props) => {
-  const [trails, api] = useTrail(2, () => ({
-    opacity: 0,
-    x: -25,
-  }));
-
-  useEffect(() => {
-    if (shown) {
-      setTimeout(() => {
-        api.start({
-          from: {
-            opacity: 0,
-            x: -25,
-          },
-          to: {
-            opacity: 1,
-            x: 0,
-          },
-        });
-      }, 150);
-    }
-
-    if (unload) {
-      api.start({
-        from: {
-          opacity: 1,
-          x: 0,
-        },
-        to: {
-          opacity: 0,
-          x: -25,
-        },
-      });
-    }
-  }, [shown, unload]);
+const TitleBar = ({ shown, hide, children }: Props) => {
+  const [trails] = useTrail(
+    2,
+    () => ({
+      from: {
+        opacity: 0,
+        x: -25,
+      },
+      to: {
+        opacity: 1,
+        x: 0,
+      },
+      reverse: !shown,
+      immediate: hide,
+      reset: true,
+    }),
+    [shown, hide]
+  );
 
   return (
     <div className="m-[300px] relative">
@@ -50,11 +33,11 @@ const TitleBar = ({ shown, unload, children }: Props) => {
         className={`font-heading font-bold text-[7rem] text-white ml-[40px]`}
         style={trails[0]}
       >
-        VERSION GAMMA
+        HELLO, I'M MATT
       </animated.h1>
       <div>
         <animated.p className={`text-white text-3xl`} style={trails[1]}>
-          making {children}, and more.
+          I make {children}, and more.
         </animated.p>
       </div>
     </div>

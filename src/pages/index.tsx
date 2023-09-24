@@ -1,26 +1,39 @@
 import { useEffect, useRef, useState } from "react";
-import { BiCodeAlt } from "react-icons/bi";
-import { FiArrowDownCircle, FiCamera, FiYoutube } from "react-icons/fi";
+import { useNavigate as useReactRouterNavigate } from "react-router-dom";
 
+import ContentWrapper from "../components/content-wrapper";
+import ImageBackground from "../components/index/image-background";
+import InfoPageContents from "../components/index/info-page-contents";
+import ScrollDownIndicator from "../components/index/scroll-down-indicator";
 import NavigationBar from "../components/navigation-bar";
 import TitleBar from "../components/title-bar";
-import useAnimate from "../hooks/use-animate";
 import useNavigate from "../hooks/use-navigate";
 import { usePageLoadTypeStore } from "../hooks/use-store";
 import useViewport from "../hooks/use-viewport";
 import { applyConditionalStyle } from "../utils/apply";
 
-const TEST_LOAD_TIME = 0;
+const MOCK_LOAD_TIME = 500;
 
-const IndexPage = () => {
+type Props = {
+  info?: boolean;
+};
+
+const IndexPage = ({ info }: Props) => {
+  const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(true);
   const [loaded, setLoaded] = useState(false);
-  const [unload, setUnloaded] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
-
+  const [showNavBar, setShowNavBar] = useState(false);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const [navBarHasAppeared, setNavBarHasAppeared] = useState(false);
-  const { setPageToFullLoad, setPageToContentLoad } = usePageLoadTypeStore();
 
-  const handleNavigate = () => setUnloaded(true);
+  const navigate = useReactRouterNavigate();
+  const onInfoPage = !!info;
+
+  const { playPageFullLoad, setPageToFullLoad, setPageToContentLoad } =
+    usePageLoadTypeStore();
+
+  const handleNavigate = () => {
+    setLoaded(false);
+  };
 
   const [navigateToVideo] = useNavigate("/video", 500, [handleNavigate]);
   const [navigateToPhoto] = useNavigate("/photo", 500, [handleNavigate]);
@@ -30,48 +43,63 @@ const IndexPage = () => {
   const { height: viewportHeight } = useViewport();
 
   useEffect(() => {
-    setPageToFullLoad();
+    if (onInfoPage) {
+      setLoaded(true);
+      setWaitingOnInitialLoad(false);
+      infoRef.current?.scrollIntoView({ behavior: "instant" });
+      return;
+    }
 
     setTimeout(() => {
       setLoaded(true);
-    }, TEST_LOAD_TIME);
+      setWaitingOnInitialLoad(false);
+      setShowScrollIndicator(true);
+    }, MOCK_LOAD_TIME);
   }, []);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const position = event.currentTarget.scrollTop;
-    setScrollPosition(position);
 
-    if (position >= viewportHeight) {
+    if (position === viewportHeight) {
+      navigate("/info");
       setNavBarHasAppeared(true);
-      setPageToContentLoad();
+      setShowNavBar(true);
+    }
+    if (position === 0) {
+      navigate("/");
+      setShowScrollIndicator(true);
     }
 
-    if (position < viewportHeight && navBarHasAppeared) {
-      setPageToFullLoad();
+    // Scrolling up from '/info' to '/'
+    if (onInfoPage && position < viewportHeight) {
+      if (!playPageFullLoad) {
+        setPageToFullLoad();
+      }
+
+      setShowNavBar(false);
+    }
+
+    // Scrolling down from '/' top '/info'
+    if (!onInfoPage && position > 0) {
+      setShowScrollIndicator(false);
     }
   };
-
-  const atTopOfPage = scrollPosition === 0;
-  const atBottomOfPage = scrollPosition === viewportHeight;
 
   return (
     <>
       <div
-        className="snap-y snap-mandatory overflow-y-auto w-screen h-screen"
+        className={`snap-y snap-mandatory w-screen h-screen ${applyConditionalStyle(
+          loaded,
+          "overflow-y-auto",
+          "overflow-y-hidden"
+        )}`}
         onScroll={handleScroll}
       >
-        <div
-          className={`flex w-screen h-screen overflow-hidden items-center snap-center snap-always ${applyConditionalStyle(
-            loaded,
-            "animate-[fadeIn_0.3s]",
-            "opacity-0"
-          )} ${applyConditionalStyle(unload, "animate-fadeOut opacity-0")}`}
-          style={{
-            background: 'url("background.png") right center fixed',
-            backgroundSize: "cover",
-          }}
+        <ImageBackground
+          shown={loaded}
+          unload={!loaded && !waitingOnInitialLoad}
         >
-          <TitleBar shown={loaded} unload={unload}>
+          <TitleBar shown={loaded} hide={waitingOnInitialLoad}>
             <a className="text-link" onClick={navigateToVideo}>
               VIDEOS
             </a>
@@ -84,33 +112,30 @@ const IndexPage = () => {
               SOFTWARE
             </a>
           </TitleBar>
-          <button
-            className={`absolute bottom-10 left-1/2 ${
-              atTopOfPage ? "animate-fadeIn" : "animate-fadeOut opacity-0"
-            }`}
-            onClick={() =>
-              infoRef.current?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            {/* <FiArrowDownCircle className="w-20 h-20 text-white animate-bounce" /> */}
-          </button>
-        </div>
-
+        </ImageBackground>
+        <ScrollDownIndicator
+          shown={showScrollIndicator}
+          hide={waitingOnInitialLoad}
+          scrollElementRef={infoRef}
+        />
         <div
           ref={infoRef}
-          className={`flex w-screen h-screen overflow-hidden items-center snap-center snap-always background-gradient`}
+          className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always background-gradient"
         >
-          <div
-            className={applyConditionalStyle(
-              unload,
-              "animate-fadeOut opacity-0"
-            )}
+          <ContentWrapper
+            unload={!loaded}
+            className="flex justify-center w-screen"
           >
-            <p>THIS IS SOME CONTENT</p>
-          </div>
+            <InfoPageContents />
+          </ContentWrapper>
         </div>
       </div>
-      {/* <NavigationBar shown={atBottomOfPage} handleNavigate={handleNavigate} /> */}
+      <NavigationBar
+        shown={showNavBar}
+        hide={!navBarHasAppeared || !info}
+        handleNavigate={handleNavigate}
+        enterImmediately={!playPageFullLoad}
+      />
     </>
   );
 };

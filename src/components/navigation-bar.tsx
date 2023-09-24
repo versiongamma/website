@@ -2,92 +2,112 @@ import { BiCodeAlt } from "react-icons/bi";
 import { FiCamera, FiYoutube } from "react-icons/fi";
 import { RiHome8Line } from "react-icons/ri";
 
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import useAnimate from "../hooks/use-animate";
 import useNavigate from "../hooks/use-navigate";
+import { applyConditionally } from "../utils/apply";
+import { animated, useSpring, useTrail } from "@react-spring/web";
 import { usePageLoadTypeStore } from "../hooks/use-store";
-import { applyConditionalStyle, applyConditionally } from "../utils/apply";
-
-const ICON_SHOW_INTERVAL = 100;
-const ICON_HIDE_INTERVAL = 50;
+import { PATHNAME_TO_INFO_MAP, routes } from "../pages/routes";
 
 type Props = {
   shown: boolean;
-  handleNavigate: () => void;
+  hide?: boolean;
+  enterImmediately?: boolean;
+  handleNavigate?: () => void;
 };
 
-const NavigationBar = ({ shown, handleNavigate }: Props) => {
-  const { playPageFullLoad, setPageToFullLoad } = usePageLoadTypeStore();
+const NavigationBar = ({
+  shown,
+  hide,
+  handleNavigate,
+  enterImmediately,
+}: Props) => {
   const { pathname } = useLocation();
+  const { playPageFullLoad, setPageToContentLoad } = usePageLoadTypeStore();
 
-  const [navBarStyle, loadNavBar, unloadNavBar] = useAnimate({
-    enter: { animation: "slideUp", duration: 500 },
-    exit: { animation: "slideDown", duration: 500 },
-  });
+  const indicatorPosition = PATHNAME_TO_INFO_MAP[pathname].indicatorPosition;
 
-  const [navigateToIndex] = useNavigate("/", 500, [
-    handleNavigate,
-    () => setPageToFullLoad(),
+  const animationConfig = {
+    reverse: !shown,
+    reset: true,
+    immediate: enterImmediately || hide,
+  };
+
+  const [barStyle] = useSpring(
+    () => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      ...animationConfig,
+    }),
+    [shown, playPageFullLoad, hide, animationConfig]
+  );
+
+  const [iconStyles] = useTrail(
+    4,
+    () => ({
+      from: { y: 60 },
+      to: { y: 0 },
+      ...animationConfig,
+    }),
+    [shown, playPageFullLoad, hide, animationConfig]
+  );
+
+  const [indicatorStyle, indicatorStyleApi] = useSpring(() => ({
+    from: { x: indicatorPosition },
+  }));
+
+  const onNavigate = (path: string) => {
+    setPageToContentLoad();
+    indicatorStyleApi.start({
+      to: { x: PATHNAME_TO_INFO_MAP[path].indicatorPosition },
+    });
+    handleNavigate && handleNavigate();
+  };
+
+  const [navigateToInfo] = useNavigate("/info", 500, [
+    () => onNavigate("/info"),
   ]);
-  const [navigateToVideo] = useNavigate("/video", 500, [handleNavigate]);
-  const [navigateToPhoto] = useNavigate("/photo", 500, [handleNavigate]);
-  const [navigateToSoftware] = useNavigate("/software", 500, [handleNavigate]);
+
+  const [navigateToVideo] = useNavigate("/video", 500, [
+    () => onNavigate("/video"),
+  ]);
+  const [navigateToPhoto] = useNavigate("/photo", 500, [
+    () => onNavigate("/photo"),
+  ]);
+  const [navigateToSoftware] = useNavigate("/software", 500, [
+    () => onNavigate("/software"),
+  ]);
 
   const actions = [
-    { icon: RiHome8Line, navigate: navigateToIndex, pathname: "/" },
+    { icon: RiHome8Line, navigate: navigateToInfo, pathname: "/info" },
     { icon: FiYoutube, navigate: navigateToVideo, pathname: "/video" },
     { icon: FiCamera, navigate: navigateToPhoto, pathname: "/photo" },
     { icon: BiCodeAlt, navigate: navigateToSoftware, pathname: "/software" },
   ];
 
-  const animationControls = actions.map(() =>
-    useAnimate(
-      {
-        enter: { animation: "slideUp", duration: 500 },
-        exit: { animation: "slideDown", duration: 500 },
-      },
-      true
-    )
-  );
-
-  useEffect(() => {
-    if (shown) {
-      loadNavBar();
-      animationControls.forEach(([, load], index) => {
-        setTimeout(() => load(), (index + 1) * ICON_SHOW_INTERVAL);
-      });
-    }
-
-    if (!shown) {
-      unloadNavBar();
-      animationControls.forEach(([, , unload], index) => {
-        setTimeout(() => unload(), index * ICON_HIDE_INTERVAL);
-      });
-    }
-  }, [shown]);
-
   return (
-    <div
-      className={`flex fixed w-screen h-14 bottom-0 bg-slate-700/20 items-center justify-center space-x-5 ${navBarStyle}`}
+    <animated.div
+      className="flex fixed w-screen h-14 bottom-0 bg-slate-700/20 items-center justify-center space-x-5"
+      style={barStyle}
     >
+      <animated.div
+        className="absolute bg-white z-[-1] w-12 h-1 mt-[52px] rounded-md"
+        style={indicatorStyle}
+      />
       {actions.map(({ icon: Icon, navigate, pathname: actionPath }, index) => {
-        const [style] = animationControls[index];
-        const disabled = actionPath === pathname;
+        const currentPage = actionPath === pathname;
         return (
-          <a
+          <animated.a
             key={index}
-            onClick={applyConditionally(!disabled, navigate)}
-            className={`${style} p-3 rounded-full hover:bg-gray-500/20 transition-colors ${applyConditionalStyle(
-              disabled,
-              "bg-gray-700 hover:bg-gray-700"
-            )}`}
+            style={iconStyles[index]}
+            onClick={applyConditionally(!currentPage, navigate)}
+            className="p-3 rounded-full hover:bg-gray-500/20 transition-colors"
           >
-            <Icon className="text-white w-6 h-6" />
-          </a>
+            <Icon className="text-white w-6 h-6 z-1" />
+          </animated.a>
         );
       })}
-    </div>
+    </animated.div>
   );
 };
 
