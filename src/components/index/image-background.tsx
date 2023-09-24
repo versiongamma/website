@@ -23,7 +23,7 @@ const ImageBackground = ({ shown, unload, children }: Props) => {
     <animated.div
       className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always"
       style={{
-        background: 'url("background.png") right center fixed',
+        background: 'url("static/background.png") right center fixed',
         backgroundSize: "cover",
         ...props,
       }}
