@@ -92,6 +92,10 @@ const IndexPage = ({ info }: Props) => {
         <Loading unload={loaded} hide={onInfoPage} />
       </div>
       <div
+        // The opacity needs to be set directly on the html, as the css file
+        // is loaded only after the html file is loaded, and hence some things can be
+        // displayed when they're not supposed to
+        style={{ opacity: loaded ? 1 : 0 }}
         className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
           loaded,
           "overflow-y-auto",

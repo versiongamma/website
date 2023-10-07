@@ -53,19 +53,21 @@ const handler = createStaticHandler(routes);
 app.set("trust proxy", true);
 
 // Serve static files (any request for a path with a file extension)
-app.get(/.*\..*/, (req, res) => {
+app.get(/.*\..*/, async (req, res) => {
   const requestedFilePath =
     req.path[req.path.length - 1] === "/" ? req.path.slice(0, -1) : req.path;
   const filePath = path.join(__dirname, `public/${requestedFilePath}`);
 
-  console.log(requestedFilePath);
+  console.log(
+    `[${requestedFilePath}] requested from ${req.ip} - ${req.headers["user-agent"]} `
+  );
   res.sendFile(filePath);
 });
 
 // Serve site pages
 app.get("*", async (req, res) => {
   console.log(
-    `Route [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
+    `Page [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
   );
 
   const fetchRequest = createFetchRequest(req);
