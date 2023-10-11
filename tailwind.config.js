@@ -5,8 +5,22 @@ module.exports = {
     fontFamily: {
       body: "Assistant, Arial, sans-serif",
       heading: "Josefin Sans, sans-serif",
+      mono: "Martian Mono, mono",
     },
     extend: {
+      screens: {
+        sm: "480px",
+        md: "768px",
+        lg: "976px",
+        xl: "1440px",
+        "2xl": "2400px",
+      },
+      backgroundImage: {
+        photos:
+          'linear-gradient(126deg,rgba(163, 72, 212, 0.7) 0%, rgba(240, 86, 187, 0.7) 33%, rgba(255, 96, 0, 0.7) 100%), url("/static/photos-bg.webp") ',
+        video:
+          'linear-gradient(126deg,rgba(163, 72, 212, 0.7) 0%, rgba(240, 86, 187, 0.7) 33%, rgba(255, 96, 0, 0.7) 100%), url("/static/video-bg-2.webp") ',
+      },
       animation: {
         slideIn: "slideIn 0.5s ease-in-out",
         slideOut: "slideOut 0.3s ease",
@@ -14,6 +28,10 @@ module.exports = {
         slideDown: "slideDown 0.5s ease",
         fadeIn: "fadeIn 0.5s ease",
         fadeOut: "fadeOut 0.5s ease",
+      },
+      gridTemplateColumns: {
+        "video-thumbnails": "repeat(auto-fill, 480px)",
+        "video-thumbnails-lg": "repeat(auto-fill, 640px)",
       },
       keyframes: {
         slideIn: {

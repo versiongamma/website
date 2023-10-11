@@ -1,13 +1,26 @@
-import { useState } from "react";
-import { usePageLoadTypeStore } from "../hooks/use-store";
+import { useCallback, useState } from "react";
+import Particles from "react-particles";
+import { Engine, Container } from "tsparticles-engine";
+import { loadSlim } from "tsparticles-slim";
 
+import { usePageLoadTypeStore } from "../hooks/use-store";
+import Background from "../components/background";
 import ContentWrapper from "../components/content-wrapper";
 import NavigationBar from "../components/navigation-bar";
-import Background from "../components/background";
+import {
+  GameDB,
+  Horde,
+  Joyous,
+  Website,
+} from "../components/software/projects";
 
-const VideoPage = () => {
+const SoftwarePage = () => {
   const [unload, setUnload] = useState(false);
   const { playPageFullLoad } = usePageLoadTypeStore();
+
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
 
   const handleNavigate = () => {
     setUnload(true);
@@ -17,17 +30,72 @@ const VideoPage = () => {
     <>
       <Background>
         <ContentWrapper
-          className="space-y-2 flex items-center flex-col"
           unload={unload}
+          className="pt-14 pb-14 overflow-y-auto space-y-6"
         >
-          <h1 className="font-bold font-heading text-4xl animate-slideIn text-white">
-            SOFTWARE
-          </h1>
-          <p className="text-white">This is the software page.</p>
+          <Joyous />
+          <GameDB />
+          <Website />
+          <Horde />
+          <Particles
+            init={particlesInit}
+            options={{
+              background: {
+                opacity: 0,
+              },
+              fpsLimit: 120,
+              interactivity: {
+                events: {
+                  onClick: {
+                    enable: false,
+                  },
+                  onHover: {
+                    enable: false,
+                  },
+                  resize: true,
+                },
+              },
+              particles: {
+                color: {
+                  value: "#FFFFFF",
+                },
+                links: {
+                  color: "#FFFFFF",
+                  distance: 300,
+                  enable: true,
+                  opacity: 0.2,
+                  width: 2,
+                },
+                move: {
+                  direction: "none",
+                  enable: true,
+                  outModes: {
+                    default: "bounce",
+                  },
+                  random: false,
+                  speed: 1,
+                  straight: false,
+                },
+                number: {
+                  value: 100,
+                },
+                opacity: {
+                  value: 0.2,
+                },
+                shape: {
+                  type: "circle",
+                },
+                size: {
+                  value: { min: 5, max: 10 },
+                },
+              },
+              detectRetina: true,
+            }}
+          />
         </ContentWrapper>
       </Background>
       <NavigationBar
-        shown={true}
+        shown
         enterImmediately={!playPageFullLoad}
         handleNavigate={handleNavigate}
       />
@@ -35,4 +103,4 @@ const VideoPage = () => {
   );
 };
 
-export default VideoPage;
+export default SoftwarePage;

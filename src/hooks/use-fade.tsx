@@ -1,6 +1,6 @@
 import { useSpring } from "@react-spring/web";
 
-const useFadeIn = (unload: boolean) => {
+const useFadeIn = (unload: boolean, from: number = 0) => {
   const [springs] = useSpring(
     () => ({
       from: { opacity: 0 },

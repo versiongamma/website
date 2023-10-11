@@ -17,12 +17,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&family=Josefin+Sans:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap" rel="stylesheet">
 
     <link href="src/index.css" rel="stylesheet" />
     <title>Version Gamma</title>
 </head>
 <body>
     <div id="root"></div>
+    <script type="text/javascript">
+      const CHARS = ["-", "\\", "|", "/"];
+      const spinner = document.getElementById("loadingSpinner");
+
+      if (!spinner) {
+        return;
+      }
+    
+      let currentFrame = 0;
+      const spinIntervalId = setInterval(() => {
+        currentFrame = currentFrame === CHARS.length - 1 ? 0 : currentFrame + 1;
+        spinner.innerText = CHARS[currentFrame];
+    
+        if (document.readyState === 'complete') {
+          clearInterval(spinIntervalId);
+        }
+    }, 50);
+    </script>
     <script type="text/javascript" src="src/index.js"></script>
     <noscript>This site requires JavaScript to function</noscript>
 </body>

@@ -1,13 +1,16 @@
-import { BiCodeAlt } from "react-icons/bi";
-import { FiCamera, FiYoutube } from "react-icons/fi";
-import { RiHome8Line } from "react-icons/ri";
+import {
+  BiSolidInfoCircle,
+  BiSolidVideo,
+  BiSolidCamera,
+  BiCodeBlock,
+} from "react-icons/bi";
 
 import { useLocation } from "react-router-dom";
 import useNavigate from "../hooks/use-navigate";
 import { applyConditionally } from "../utils/apply";
 import { animated, useSpring, useTrail } from "@react-spring/web";
 import { usePageLoadTypeStore } from "../hooks/use-store";
-import { PATHNAME_TO_INFO_MAP, routes } from "../pages/routes";
+import { PATHNAME_TO_INFO_MAP } from "../pages/routes";
 
 type Props = {
   shown: boolean;
@@ -79,35 +82,40 @@ const NavigationBar = ({
   ]);
 
   const actions = [
-    { icon: RiHome8Line, navigate: navigateToInfo, pathname: "/info" },
-    { icon: FiYoutube, navigate: navigateToVideo, pathname: "/video" },
-    { icon: FiCamera, navigate: navigateToPhoto, pathname: "/photo" },
-    { icon: BiCodeAlt, navigate: navigateToSoftware, pathname: "/software" },
+    { icon: BiSolidInfoCircle, navigate: navigateToInfo, pathname: "/info" },
+    { icon: BiSolidVideo, navigate: navigateToVideo, pathname: "/video" },
+    { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: "/photo" },
+    { icon: BiCodeBlock, navigate: navigateToSoftware, pathname: "/software" },
   ];
 
   return (
-    <animated.div
-      className="flex fixed w-screen h-14 bottom-0 bg-slate-700/20 items-center justify-center space-x-5"
-      style={barStyle}
-    >
+    // Wrapper div is so bar doesn't show up until css is properly loaded
+    <div style={{ opacity: !hide ? 1 : 0 }}>
       <animated.div
-        className="absolute bg-white z-[-1] w-12 h-1 mt-[52px] rounded-md"
-        style={indicatorStyle}
-      />
-      {actions.map(({ icon: Icon, navigate, pathname: actionPath }, index) => {
-        const currentPage = actionPath === pathname;
-        return (
-          <animated.a
-            key={index}
-            style={iconStyles[index]}
-            onClick={applyConditionally(!currentPage, navigate)}
-            className="p-3 rounded-full hover:bg-gray-500/20 transition-colors"
-          >
-            <Icon className="text-white w-6 h-6 z-1" />
-          </animated.a>
-        );
-      })}
-    </animated.div>
+        className="flex fixed w-screen h-14 bottom-0 bg-slate-700/20 items-center justify-center space-x-5"
+        style={barStyle}
+      >
+        <animated.div
+          className="absolute bg-white z-[-1] w-12 h-1 mt-[52px] rounded-md"
+          style={indicatorStyle}
+        />
+        {actions.map(
+          ({ icon: Icon, navigate, pathname: actionPath }, index) => {
+            const currentPage = actionPath === pathname;
+            return (
+              <animated.a
+                key={index}
+                style={iconStyles[index]}
+                onClick={applyConditionally(!currentPage, navigate)}
+                className="p-3 rounded-full hover-bg"
+              >
+                <Icon className="text-white w-6 h-6 z-1" />
+              </animated.a>
+            );
+          }
+        )}
+      </animated.div>
+    </div>
   );
 };
 

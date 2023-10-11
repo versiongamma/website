@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import useFadeIn from "../../hooks/use-fade-in";
+import useFadeIn from "../../hooks/use-fade";
 import { animated } from "@react-spring/web";
-import useAsciiSpinner from "./use-ascii-spinner";
 
 type Props = {
   unload: boolean;
@@ -10,7 +9,6 @@ type Props = {
 
 const Loading = ({ unload, hide }: Props) => {
   const [unmount, setUnmount] = useState(false);
-  const spinner = useAsciiSpinner(50);
 
   const [style] = useFadeIn(unload);
 
@@ -28,10 +26,23 @@ const Loading = ({ unload, hide }: Props) => {
 
   return (
     <animated.div
-      className="fixed flex justify-center items-center w-screen h-screen text-white z[-1] bg-transparent"
-      style={style}
+      style={{
+        ...style,
+        ...(!unload ? { opacity: 1 } : {}),
+        display: "flex",
+        position: "fixed",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100vw",
+        height: "100vh",
+        color: "white",
+        zIndex: -1,
+        backgroundColor: "rgba(0,0,0,0)",
+      }}
     >
-      <p className="font-[mono]">GETTING READY... {spinner}</p>
+      <p style={{ fontFamily: "Martian Mono" }}>
+        GETTING READY... <span id="loadingSpinner"> </span>
+      </p>
     </animated.div>
   );
 };

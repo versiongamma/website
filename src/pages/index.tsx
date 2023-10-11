@@ -13,8 +13,6 @@ import useViewport from "../hooks/use-viewport";
 import { applyConditionalStyle } from "../utils/apply";
 import Loading from "../components/index/loading";
 
-const MOCK_LOAD_TIME = 2000;
-
 type Props = {
   info?: boolean;
 };
@@ -22,6 +20,7 @@ type Props = {
 const IndexPage = ({ info }: Props) => {
   const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(true);
   const [loaded, setLoaded] = useState(false);
+  const [unload, setUnload] = useState(true);
   const [showNavBar, setShowNavBar] = useState(false);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const [navBarHasAppeared, setNavBarHasAppeared] = useState(false);
@@ -32,7 +31,7 @@ const IndexPage = ({ info }: Props) => {
   const { playPageFullLoad, setPageToFullLoad } = usePageLoadTypeStore();
 
   const handleNavigate = () => {
-    setLoaded(false);
+    setUnload(true);
   };
 
   const [navigateToVideo] = useNavigate("/video", 500, [handleNavigate]);
@@ -44,18 +43,17 @@ const IndexPage = ({ info }: Props) => {
   const { height: viewportHeight } = useViewport();
 
   useEffect(() => {
+    setLoaded(true);
+    setUnload(false);
+
     if (onInfoPage) {
-      setLoaded(true);
       setWaitingOnInitialLoad(false);
       infoRef.current?.scrollIntoView({ behavior: "instant" });
       return;
     }
 
-    setTimeout(() => {
-      setLoaded(true);
-      setWaitingOnInitialLoad(false);
-      setShowScrollIndicator(true);
-    }, MOCK_LOAD_TIME);
+    setWaitingOnInitialLoad(false);
+    setShowScrollIndicator(true);
   }, []);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -88,9 +86,7 @@ const IndexPage = ({ info }: Props) => {
 
   return (
     <>
-      <div>
-        <Loading unload={loaded} hide={onInfoPage} />
-      </div>
+      <Loading unload={!unload} hide={onInfoPage} />
       <div
         // The opacity needs to be set directly on the html, as the css file
         // is loaded only after the html file is loaded, and hence some things can be
@@ -105,25 +101,34 @@ const IndexPage = ({ info }: Props) => {
         ref={topRef}
       >
         <ImageBackground
-          shown={loaded}
-          unload={!loaded && !waitingOnInitialLoad}
+          shown={!unload}
+          unload={unload && !waitingOnInitialLoad}
         >
-          <TitleBar shown={loaded} hide={waitingOnInitialLoad}>
-            <a className="text-link" onClick={navigateToVideo}>
+          <TitleBar shown={!unload} hide={waitingOnInitialLoad}>
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToVideo}
+            >
               VIDEOS
             </a>
             ,{" "}
-            <a className="text-link" onClick={navigateToPhoto}>
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToPhoto}
+            >
               PHOTOS
             </a>
             ,{" "}
-            <a className="text-link" onClick={navigateToSoftware}>
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToSoftware}
+            >
               SOFTWARE
             </a>
           </TitleBar>
         </ImageBackground>
         <ScrollDownIndicator
-          shown={showScrollIndicator}
+          shown={showScrollIndicator && !unload}
           hide={waitingOnInitialLoad}
           scrollElementRef={infoRef}
         />
@@ -132,8 +137,8 @@ const IndexPage = ({ info }: Props) => {
           className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always background-gradient"
         >
           <ContentWrapper
-            unload={!loaded}
-            className="flex justify-center w-screen"
+            unload={unload}
+            className="flex items-center justify-center w-screen"
           >
             <InfoPageContents />
           </ContentWrapper>
@@ -141,7 +146,7 @@ const IndexPage = ({ info }: Props) => {
       </div>
       <NavigationBar
         shown={showNavBar}
-        hide={!navBarHasAppeared || !info}
+        hide={!navBarHasAppeared || !onInfoPage}
         handleNavigate={handleNavigate}
         enterImmediately={!playPageFullLoad}
       />

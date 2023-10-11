@@ -12,6 +12,8 @@ import {
 } from "react-router-dom/server";
 
 import { routes } from "./pages/routes";
+import router from "./api/routes/video/video";
+import { logRequest } from "./api/utils/logger";
 
 const createFetchRequest = (req: ExpressRequest) => {
   let origin = `${req.protocol}://${req.get("host")}`;
@@ -52,23 +54,22 @@ const handler = createStaticHandler(routes);
 
 app.set("trust proxy", true);
 
+app.use(router);
+
 // Serve static files (any request for a path with a file extension)
 app.get(/.*\..*/, async (req, res) => {
+  logRequest(req);
+
   const requestedFilePath =
     req.path[req.path.length - 1] === "/" ? req.path.slice(0, -1) : req.path;
   const filePath = path.join(__dirname, `public/${requestedFilePath}`);
 
-  console.log(
-    `[${requestedFilePath}] requested from ${req.ip} - ${req.headers["user-agent"]} `
-  );
   res.sendFile(filePath);
 });
 
 // Serve site pages
 app.get("*", async (req, res) => {
-  console.log(
-    `Page [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
-  );
+  logRequest(req);
 
   const fetchRequest = createFetchRequest(req);
   const context = (await handler.query(fetchRequest)) as StaticHandlerContext;
