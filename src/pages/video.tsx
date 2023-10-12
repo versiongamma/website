@@ -55,16 +55,14 @@ const VideoPage = () => {
   const backgroundImageLoaded = useWaitForImgLoad(backgroundImage.url);
 
   const [videos, setVideos] = useState<YoutubeApiPlaylistResponse | null>(null);
-  const [error, setError] = useState(false);
 
+  // TODO: add error handling to response
   useEffect(() => {
     axios.get<VideoResponse>(GET_VIDEOS_URL).then((res) => {
       if (didVideoRequestSucceed(res.data)) {
         setVideos(res.data.data);
         return;
       }
-
-      setError(true);
     });
   }, []);
 

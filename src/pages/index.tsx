@@ -12,21 +12,23 @@ import { usePageLoadTypeStore } from "../hooks/use-store";
 import useViewport from "../hooks/use-viewport";
 import { applyConditionalStyle } from "../utils/apply";
 import Loading from "../components/index/loading";
+import CallToAction from "../components/index/call-to-action";
 
 type Props = {
   info?: boolean;
 };
 
 const IndexPage = ({ info }: Props) => {
+  const onInfoPage = !!info;
+
   const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(true);
-  const [loaded, setLoaded] = useState(false);
-  const [unload, setUnload] = useState(true);
-  const [showNavBar, setShowNavBar] = useState(false);
+  const [loaded, setLoaded] = useState(onInfoPage);
+  const [unload, setUnload] = useState(!onInfoPage);
+  const [showNavBar, setShowNavBar] = useState(onInfoPage);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
-  const [navBarHasAppeared, setNavBarHasAppeared] = useState(false);
+  const [navBarHasAppeared, setNavBarHasAppeared] = useState(onInfoPage);
 
   const navigate = useReactRouterNavigate();
-  const onInfoPage = !!info;
 
   const { playPageFullLoad, setPageToFullLoad } = usePageLoadTypeStore();
 
@@ -141,6 +143,7 @@ const IndexPage = ({ info }: Props) => {
             className="flex items-center justify-center w-screen"
           >
             <InfoPageContents />
+            <CallToAction shown={showNavBar} hide={false} />
           </ContentWrapper>
         </div>
       </div>

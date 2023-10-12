@@ -8,7 +8,10 @@ export const routes = [
     path: "/",
     element: <IndexPage />,
   },
-  { path: "/info", element: <IndexPage info /> },
+  {
+    path: "/info",
+    element: <IndexPage info />,
+  },
   {
     path: "/video",
     element: <VideoPage />,

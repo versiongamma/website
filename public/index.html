@@ -25,22 +25,26 @@
 <body>
     <div id="root"></div>
     <script type="text/javascript">
-      const CHARS = ["-", "\\", "|", "/"];
-      const spinner = document.getElementById("loadingSpinner");
+      const runLoadingSpinner = () => {
+        const CHARS = ["-", "\\", "|", "/"];
+        const spinner = document.getElementById("loadingSpinner");
 
-      if (!spinner) {
-        return;
-      }
-    
-      let currentFrame = 0;
-      const spinIntervalId = setInterval(() => {
-        currentFrame = currentFrame === CHARS.length - 1 ? 0 : currentFrame + 1;
-        spinner.innerText = CHARS[currentFrame];
-    
-        if (document.readyState === 'complete') {
-          clearInterval(spinIntervalId);
+        if (!spinner) {
+          return;
         }
-    }, 50);
+      
+        let currentFrame = 0;
+        const spinIntervalId = setInterval(() => {
+          currentFrame = currentFrame === CHARS.length - 1 ? 0 : currentFrame + 1;
+          spinner.innerText = CHARS[currentFrame];
+      
+          if (document.readyState === 'complete') {
+            clearInterval(spinIntervalId);
+          }
+      }, 50);
+    }
+
+    runLoadingSpinner();
     </script>
     <script type="text/javascript" src="src/index.js"></script>
     <noscript>This site requires JavaScript to function</noscript>

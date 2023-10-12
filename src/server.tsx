@@ -74,6 +74,10 @@ app.get("*", async (req, res) => {
   const fetchRequest = createFetchRequest(req);
   const context = (await handler.query(fetchRequest)) as StaticHandlerContext;
 
+  if (context.statusCode === 404) {
+    return res.redirect("/");
+  }
+
   let router = createStaticRouter(handler.dataRoutes, context);
 
   const app = renderToString(

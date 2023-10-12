@@ -6,7 +6,6 @@ const useWaitForImgLoad = (src: string, callback?: () => void) => {
   useEffect(() => {
     const preloadedImage = new Image();
     preloadedImage.onload = () => {
-      console.log("image loaded");
       setLoaded(true);
       if (callback) {
         callback();

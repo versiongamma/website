@@ -37,3 +37,23 @@ export type VideoSuccessResponse = {
 };
 
 export type VideoResponse = VideoSuccessResponse | ErrorResponse;
+
+export type ChannelStats = {
+  viewCount: number;
+  subscriberCount: number;
+  videoCount: number;
+};
+
+export type YoutubeApiChannelStatisticsResponse = {
+  items: {
+    id: string;
+    statistics: ChannelStats;
+  }[];
+};
+
+export type SubscriberSuccessResponse = {
+  status: Status.Success;
+  data: YoutubeApiChannelStatisticsResponse;
+};
+
+export type SubscriberResponse = SubscriberSuccessResponse | ErrorResponse;

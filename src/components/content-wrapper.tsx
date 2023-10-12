@@ -34,7 +34,9 @@ const ContentWrapper = ({
         className={`content-wrap ${backgroundClassName ?? ""}`}
         style={backgroundStyle}
       >
-        <main className={`flex flex-col w-full h-full ${className ?? ""}`}>
+        <main
+          className={`flex flex-col w-full h-full relative ${className ?? ""}`}
+        >
           {children}
         </main>
       </div>

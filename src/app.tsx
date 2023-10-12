@@ -5,6 +5,4 @@ import { routes } from "./pages/routes";
 
 const router = createBrowserRouter(routes);
 
-export const App = () => {
-  return <RouterProvider router={router} />;
-};
+export const App = () => <RouterProvider router={router} />;
