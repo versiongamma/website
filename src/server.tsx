@@ -12,7 +12,8 @@ import {
 } from "react-router-dom/server";
 
 import { routes } from "./pages/routes";
-import router from "./api/routes/video/video";
+import videoRouter from "./api/routes/video/video";
+import photosRouter from "./api/routes/photos/photos";
 import { logRequest } from "./api/utils/logger";
 
 const createFetchRequest = (req: ExpressRequest) => {
@@ -54,7 +55,8 @@ const handler = createStaticHandler(routes);
 
 app.set("trust proxy", true);
 
-app.use(router);
+app.use(videoRouter);
+app.use(photosRouter);
 
 // Serve static files (any request for a path with a file extension)
 app.get(/.*\..*/, async (req, res) => {
