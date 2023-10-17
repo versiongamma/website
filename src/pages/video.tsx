@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import axios from "axios";
+import axios from "../axios";
 
 import Background from "../components/background";
 import ContentWrapper from "../components/content-wrapper";
@@ -13,6 +13,7 @@ import { didVideoRequestSucceed } from "../api/routes/video/utils";
 import Thumbnail, { ThumbnailSkeleton } from "../components/video/thumbnail";
 import useWaitForImgLoad from "../hooks/use-wait-for-img-load";
 import { gradient } from "../theme";
+import NoSSR from "react-no-ssr";
 
 const GET_VIDEOS_URL = "/api/videos/versiongamma";
 const THUMBNAIL_SKELETON_COUNT = 20;
@@ -88,32 +89,34 @@ const VideoPage = () => {
               VERSION GAMMA
             </p>
           </span>
-          <span className="grid grid-cols-video-thumbnails overflow-y-auto gap-6 justify-center 2xl:grid-cols-video-thumbnails-lg">
-            {!videos &&
-              [...Array(THUMBNAIL_SKELETON_COUNT)].map((_x, i) => (
-                <ThumbnailSkeleton key={i} />
-              ))}
-            {videos &&
-              videos.items.map(
-                ({
-                  snippet: {
-                    title,
-                    thumbnails: {
-                      maxres: { url },
+          <NoSSR>
+            <span className="grid grid-cols-video-thumbnails overflow-y-auto gap-6 justify-center 2xl:grid-cols-video-thumbnails-lg">
+              {!videos &&
+                [...Array(THUMBNAIL_SKELETON_COUNT)].map((_e, i) => (
+                  <ThumbnailSkeleton key={i} />
+                ))}
+              {videos &&
+                videos.items.map(
+                  ({
+                    snippet: {
+                      title,
+                      thumbnails: {
+                        maxres: { url },
+                      },
+                      publishedAt,
+                      resourceId: { videoId },
                     },
-                    publishedAt,
-                    resourceId: { videoId },
-                  },
-                }) => (
-                  <Thumbnail
-                    id={videoId}
-                    img={url}
-                    title={title}
-                    publishedDate={new Date(publishedAt)}
-                  />
-                )
-              )}
-          </span>
+                  }) => (
+                    <Thumbnail
+                      id={videoId}
+                      img={url}
+                      title={title}
+                      publishedDate={new Date(publishedAt)}
+                    />
+                  )
+                )}
+            </span>
+          </NoSSR>
         </ContentWrapper>
       </Background>
       <NavigationBar

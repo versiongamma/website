@@ -1,12 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { BiLogoYoutube, BiLogoGithub, BiLogoInstagram } from "react-icons/bi";
-import {
-  ChannelStats,
-  SubscriberResponse,
-  SubscriberSuccessResponse,
-} from "../../api/routes/video/types";
+import { BiLogoGithub, BiLogoInstagram, BiLogoYoutube } from "react-icons/bi";
+
+import { ChannelStats, SubscriberResponse } from "../../api/routes/video/types";
 import { didSubscriberRequestSucceed } from "../../api/routes/video/utils";
+import axios from "../../axios";
 
 const GET_SUBSCRIBERS_URL = "api/videos/versiongamma/subscribers";
 const ICON_STYLE = "w-[32px] h-[32px] 2xl:w-[64px] 2xl:h-[64px]";

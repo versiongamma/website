@@ -50,7 +50,7 @@ const config = {
   sourcemap: sourcemap,
   entryPoints: ["src/index.tsx"],
   bundle: true,
-  minify: true,
+  minify: !sourcemap,
   outdir: "build/public/src",
   external: ["*.jpg", "*.png", "*.webp", "${BACKGROUND_IMAGE_URL}"],
   plugins: [

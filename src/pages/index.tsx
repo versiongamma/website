@@ -37,7 +37,7 @@ const IndexPage = ({ info }: Props) => {
   };
 
   const [navigateToVideo] = useNavigate("/video", 500, [handleNavigate]);
-  const [navigateToPhoto] = useNavigate("/photo", 500, [handleNavigate]);
+  const [navigateToPhoto] = useNavigate("/photos", 500, [handleNavigate]);
   const [navigateToSoftware] = useNavigate("/software", 500, [handleNavigate]);
 
   const topRef = useRef<HTMLDivElement>(null);
