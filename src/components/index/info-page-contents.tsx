@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { BiLogoGithub, BiLogoInstagram, BiLogoYoutube } from "react-icons/bi";
+import { useEffect, useState } from 'react';
+import { BiLogoGithub, BiLogoInstagram, BiLogoYoutube } from 'react-icons/bi';
 
-import { ChannelStats, SubscriberResponse } from "../../api/routes/video/types";
-import { didSubscriberRequestSucceed } from "../../api/routes/video/utils";
-import axios from "../../axios";
+import { ChannelStats, SubscriberResponse } from '../../api/routes/video/types';
+import { didSubscriberRequestSucceed } from '../../api/routes/video/utils';
+import axios from '../../axios';
 
-const GET_SUBSCRIBERS_URL = "api/videos/versiongamma/subscribers";
-const ICON_STYLE = "w-[32px] h-[32px] 2xl:w-[64px] 2xl:h-[64px]";
+const GET_SUBSCRIBERS_URL = 'api/videos/versiongamma/subscribers';
+const ICON_STYLE = 'w-[32px] h-[32px] 2xl:w-[64px] 2xl:h-[64px]';
 const LINK_STYLE =
-  "hover-bg p-1 rounded-full w-[48px] h-[48px] flex items-center justify-center m-1 2xl:m-2";
+  'hover-bg p-1 rounded-full w-[48px] h-[48px] flex items-center justify-center m-1 2xl:m-2';
 
 const getFormattedNumber = (x?: number) =>
-  x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ?? "some";
+  x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') ?? 'some';
 
 const SocialLinks = () => (
   <div className="flex flex-col items-center z-10">
@@ -21,6 +21,7 @@ const SocialLinks = () => (
         className={LINK_STYLE}
         href="https://youtube.com/c/VersionGamma"
         target="_blank"
+        rel="noreferrer"
       >
         <BiLogoYoutube className={ICON_STYLE} />
       </a>
@@ -28,6 +29,7 @@ const SocialLinks = () => (
         className={LINK_STYLE}
         href="https://github.com/versiongamma"
         target="_blank"
+        rel="noreferrer"
       >
         <BiLogoGithub className={ICON_STYLE} />
       </a>
@@ -35,6 +37,7 @@ const SocialLinks = () => (
         className={LINK_STYLE}
         href="https://instagram.com/matthewsphotosnz"
         target="_blank"
+        rel="noreferrer"
       >
         <BiLogoInstagram className={ICON_STYLE} />
       </a>
@@ -67,42 +70,44 @@ const InfoPageContents = () => {
       </span>
       <span className="space-y-4 2xl:text-2xl flex-grow -lg:m-2">
         <p className="-md:hidden">
-          So you want to know more about who am I then, other than just a "maker
-          of stuff". Understandable, cause there's a lot of stuff.
+          So you want to know more about who am I then, other than just a “maker
+          of stuff”. Understandable, cause there’s a lot of stuff.
         </p>
-        <p className="md:hidden text-center">
-          Hi! I'm Matt, and I make a bunch of stuff.
-        </p>
+
         <p className="-lg:text-center">
-          Mainly, I'm a software developer. Most of my experience is in web dev
-          with TypeScript, React and Node, but I've done some stuff in Java, C#,
-          C, and C++.{" "}
+          <span className="md:hidden">
+            Hi! I’m Matt, and I make a bunch of stuff.{' '}
+          </span>
+          Mainly I’m a software developer. Most of my experience is in web dev
+          with TypeScript, React and Node, but I’ve done some projects in Java,
+          C#, C, and C++.
           <span className="-md:hidden">
-            It's what I studied, what I've been working the past years, and so
+            It’s what I studied, what I’ve been working the past years, and so
             one might say I am a professional developer. Because I am.
           </span>
         </p>
         <p className="-lg:text-center">
           I also make videos for the YouTube channel Version Gamma, where I
           mostly discuss game design, although I occasionally branch out into
-          other topics I'm passionate about. Apparently{" "}
+          other topics I’m passionate about. Apparently{' '}
           {getFormattedNumber(viewCount)} people decided to click on one of my
           thumbnails, and {getFormattedNumber(subscriberCount)} chose to stick
-          around, so there's that.
+          around, so there’s that.
         </p>
-        <p className="-lg:text-center">
-          You might also notice I'm a little bit of an appreciator of things
-          involving cameras{" "}
-          <span className="-md:hidden">
-            , from the personal photography I do, to the videography that goes
-            into the videos I produce
-          </span>
-          . It's been a hobby of mine for many years, and I use it as an excuse
-          to visit interesting and beautiful places, which we have in great
-          abundance here in my home of Aotearoa.
+        <p className="md:hidden text-center">
+          I’m also a photographer and videographer. I’ve got a lot of the shots
+          I’ve taken on this site, so have a look around!
+        </p>
+        <p className="-md:hidden -lg:text-center">
+          You might also notice I’m a little bit of an appreciator of things
+          involving cameras, from the personal photography I do, to the
+          videography that goes into the videos I produce . It’s been a hobby of
+          mine for many years, and I use it as an excuse to visit interesting
+          and beautiful places, which we have in great abundance here in my home
+          of Aotearoa.
         </p>
       </span>
-      <span className="flex items-center justify-center xl:justify-start min-w-[300px]">
+      <span className="flex items-center justify-center xl:justify-start min-w-[300px] -vmd:hidden">
         <SocialLinks />
       </span>
     </div>
