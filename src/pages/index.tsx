@@ -143,7 +143,7 @@ const IndexPage = ({ info }: Props) => {
         >
           <ContentWrapper
             unload={unload}
-            className="flex items-center justify-center w-screen"
+            className="flex items-center justify-center w-screen -md:overflow-y-auto"
           >
             <InfoPageContents />
             <CallToAction shown={showNavBar} hide={false} />

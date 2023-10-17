@@ -61,47 +61,48 @@ const InfoPageContents = () => {
   const { viewCount, subscriberCount } = statistics ?? {};
 
   return (
-    <div className="flex -lg:max-w-[600px] lg:w-[700px] xl:w-[1300px] 2xl:w-[1500px] space-y-5 lg:space-y-20 xl:space-x-20  xl:flex-row flex-col">
+    <div
+      className="flex -lg:max-w-[600px] lg:w-[700px] xl:w-[1300px] 2xl:w-[1500px] 
+    space-y-3 lg:space-y-10 xl:space-x-20 xl:flex-row flex-col"
+    >
       <span className="flex items-center xl:justify-end justify-center min-w-[300px]">
         <img
           src="/static/me.webp"
-          className="max-w-[150px] lg:max-w-[250px] 2xl:max-w-[350px]  self-center rounded-full"
+          className="max-w-[150px] lg:max-w-[200px] 2xl:max-w-[350px]  self-center rounded-full"
         />
       </span>
       <span className="space-y-4 2xl:text-2xl flex-grow -lg:m-2">
         <p className="-md:hidden">
           So you want to know more about who am I then, other than just a “maker
-          of stuff”. Understandable, cause there’s a lot of stuff.
+          of stuff”. Fair enough.
         </p>
 
         <p className="-lg:text-center">
           <span className="md:hidden">
             Hi! I’m Matt, and I make a bunch of stuff.{' '}
           </span>
-          Mainly I’m a software developer. Most of my experience is in web dev
-          with TypeScript, React and Node, but I’ve done some projects in Java,
-          C#, C, and C++.
-          <span className="-md:hidden">
-            It’s what I studied, what I’ve been working the past years, and so
-            one might say I am a professional developer. Because I am.
-          </span>
+          Most notably, I’m a software developer. The majority of my experience
+          is in web dev with TypeScript, React & NodeJS, but I’ve worked outside
+          the web as well, mostly in the various suffixes of C. (Thats{' '}
+          <span className="font-mono">++</span> and{' '}
+          <span className="font-mono">#</span> for the uninitiated)
         </p>
         <p className="-lg:text-center">
-          I also make videos for the YouTube channel Version Gamma, where I
+          I also make videos for YouTube under the channel Version Gamma. I
           mostly discuss game design, although I occasionally branch out into
           other topics I’m passionate about. Apparently{' '}
-          {getFormattedNumber(viewCount)} people decided to click on one of my
-          thumbnails, and {getFormattedNumber(subscriberCount)} chose to stick
+          {getFormattedNumber(viewCount)} people have decided to click on one of
+          my videos, and {getFormattedNumber(subscriberCount)} chose to stick
           around, so there’s that.
         </p>
         <p className="md:hidden text-center">
-          I’m also a photographer and videographer. I’ve got a lot of the shots
-          I’ve taken on this site, so have a look around!
+          I’m also a photographer and videographer. A lot of the work I’ve done
+          is on this site, so feel free to have a look around!
         </p>
         <p className="-md:hidden -lg:text-center">
           You might also notice I’m a little bit of an appreciator of things
           involving cameras, from the personal photography I do, to the
-          videography that goes into the videos I produce . It’s been a hobby of
+          videography that goes into the videos I produce. It’s been a hobby of
           mine for many years, and I use it as an excuse to visit interesting
           and beautiful places, which we have in great abundance here in my home
           of Aotearoa.
