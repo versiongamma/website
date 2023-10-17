@@ -12,12 +12,16 @@ type TechStackIconProps = {
 const TechStackIcons = ({ icons }: TechStackIconProps) => (
   <span className="flex space-x-3">
     {icons.map((Icon, index) => (
-      <Icon key={index} className="w-[48px] h-[48px] text-white" />
+      <Icon
+        key={index}
+        className="xl:w-[48px] xl:h-[48px] w-[24px] h-[24px] text-white"
+      />
     ))}
   </span>
 );
 
-const TITLE_TEXT_STYLE = "text-white font-heading text-5xl font-semibold pt-2";
+const TITLE_TEXT_STYLE =
+  "text-white font-heading xl:text-5xl text-3xl font-semibold pt-2";
 
 type TitleProps = {
   direction: Direction;

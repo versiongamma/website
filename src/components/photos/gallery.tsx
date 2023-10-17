@@ -11,7 +11,6 @@ import { didPhotosRequestSucceed } from "../../api/routes/photos/utils";
 import ReactPhotoGallery, { PhotoClickHandler } from "react-photo-gallery";
 import Overlay from "./overlay";
 import Image from "./image";
-import Loading from "./loading";
 import useFadeIn from "../../hooks/use-fade";
 import { animated } from "@react-spring/web";
 

@@ -79,18 +79,20 @@ const VideoPage = () => {
           hide={!backgroundImageLoaded}
           backgroundStyle={backgroundImage.style}
         >
-          <span className="flex items-center space-x-2 col-span-full m-2 mt-8">
+          <span className="flex items-center justify-center xl:justify-start space-x-2 col-span-full m-2 mt-8">
             <img
               src="/static/vgamma.webp"
-              className="rounded-full"
-              width={128}
+              className="rounded-full w-16 xl:w-24"
             />
             <p className="font-heading text-white text-2xl font-bold">
               VERSION GAMMA
             </p>
           </span>
           <NoSSR>
-            <span className="grid grid-cols-video-thumbnails overflow-y-auto gap-6 justify-center 2xl:grid-cols-video-thumbnails-lg">
+            <span
+              className="grid grid-cols-video-thumbnails-sm xl:grid-cols-video-thumbnails-md 2xl:grid-cols-video-thumbnails-lg
+             overflow-y-auto gap-6 justify-center "
+            >
               {!videos &&
                 [...Array(THUMBNAIL_SKELETON_COUNT)].map((_e, i) => (
                   <ThumbnailSkeleton key={i} />

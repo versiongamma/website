@@ -34,7 +34,7 @@ const Overlay = ({ src, onNext, onPrevious, onClickAway }: Props) => {
       style={style}
       onClick={handleClose}
       className="fixed flex items-center justify-center top-0 left-0 bg-slate-800/80 
-  w-screen h-screen overflow-hidden z-10 space-x-4"
+  w-screen h-screen overflow-hidden z-10 space-x-4 -md:hidden"
     >
       <button className="rounded-full hover-bg p-2" onClick={onPrevious}>
         <BiCaretLeftCircle className="w-16 h-16" />

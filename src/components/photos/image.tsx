@@ -23,7 +23,7 @@ const Image = ({ photo, index, onClick }: RenderImageProps) => {
           src={src}
           style={style}
           onClick={handleClick}
-          className=" cursor-pointer hover:scale-95 transition-transform"
+          className="md:cursor-pointer md:hover:scale-95 transition-transform"
         />
       ) : (
         <Skeleton className="w-full h-full">

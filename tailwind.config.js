@@ -10,8 +10,11 @@ module.exports = {
     extend: {
       screens: {
         sm: "480px",
+        "-sm": { max: "480px" },
         md: "768px",
+        "-md": { max: "768px" },
         lg: "976px",
+        "-lg": { max: "976px" },
         xl: "1440px",
         "2xl": "2400px",
       },
@@ -30,7 +33,8 @@ module.exports = {
         fadeOut: "fadeOut 0.5s ease",
       },
       gridTemplateColumns: {
-        "video-thumbnails": "repeat(auto-fill, 480px)",
+        "video-thumbnails-sm": "repeat(auto-fill, 320px)",
+        "video-thumbnails-md": "repeat(auto-fill, 480px)",
         "video-thumbnails-lg": "repeat(auto-fill, 640px)",
       },
       keyframes: {

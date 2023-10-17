@@ -8,35 +8,37 @@ import axios from "../../axios";
 const GET_SUBSCRIBERS_URL = "api/videos/versiongamma/subscribers";
 const ICON_STYLE = "w-[32px] h-[32px] 2xl:w-[64px] 2xl:h-[64px]";
 const LINK_STYLE =
-  "hover-bg p-1 rounded-full w-[48px] h-[48px] flex items-center justify-center";
+  "hover-bg p-1 rounded-full w-[48px] h-[48px] flex items-center justify-center m-1 2xl:m-2";
 
 const getFormattedNumber = (x?: number) =>
   x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ?? "some";
 
 const SocialLinks = () => (
-  <div className="flex flex-col items-center w-[200px] 2xl:w-[300px] space-y-2 2xl:space-y-4">
-    <p className="font-mono text-xs 2xl:text-xl">YOU CAN FIND ME AT</p>
-    <a
-      className={LINK_STYLE}
-      href="https://youtube.com/c/VersionGamma"
-      target="_blank"
-    >
-      <BiLogoYoutube className={ICON_STYLE} />
-    </a>
-    <a
-      className={LINK_STYLE}
-      href="https://github.com/versiongamma"
-      target="_blank"
-    >
-      <BiLogoGithub className={ICON_STYLE} />
-    </a>
-    <a
-      className={LINK_STYLE}
-      href="https://instagram.com/matthewsphotosnz"
-      target="_blank"
-    >
-      <BiLogoInstagram className={ICON_STYLE} />
-    </a>
+  <div className="flex flex-col items-center z-10">
+    <p className="font-mono text-xs 2xl:text-xl m-2">YOU CAN FIND ME AT</p>
+    <div className="flex xl:flex-col flex-row items-center justify-center w-[200px] 2xl:w-[300px]">
+      <a
+        className={LINK_STYLE}
+        href="https://youtube.com/c/VersionGamma"
+        target="_blank"
+      >
+        <BiLogoYoutube className={ICON_STYLE} />
+      </a>
+      <a
+        className={LINK_STYLE}
+        href="https://github.com/versiongamma"
+        target="_blank"
+      >
+        <BiLogoGithub className={ICON_STYLE} />
+      </a>
+      <a
+        className={LINK_STYLE}
+        href="https://instagram.com/matthewsphotosnz"
+        target="_blank"
+      >
+        <BiLogoInstagram className={ICON_STYLE} />
+      </a>
+    </div>
   </div>
 );
 
@@ -56,26 +58,31 @@ const InfoPageContents = () => {
   const { viewCount, subscriberCount } = statistics ?? {};
 
   return (
-    <div className="flex w-[1300px] 2xl:w-[1500px] space-x-20">
-      <span className="flex items-center justify-end min-w-[300px]">
+    <div className="flex -lg:max-w-[600px] lg:w-[700px] xl:w-[1300px] 2xl:w-[1500px] space-y-5 lg:space-y-20 xl:space-x-20  xl:flex-row flex-col">
+      <span className="flex items-center xl:justify-end justify-center min-w-[300px]">
         <img
           src="/static/me.webp"
-          className="max-w-[250px] self-center 2xl:max-w-[350px] rounded-full"
+          className="max-w-[150px] lg:max-w-[250px] 2xl:max-w-[350px]  self-center rounded-full"
         />
       </span>
-      <span className="space-y-4 2xl:text-2xl flex-grow">
-        <p>
+      <span className="space-y-4 2xl:text-2xl flex-grow -lg:m-2">
+        <p className="-md:hidden">
           So you want to know more about who am I then, other than just a "maker
           of stuff". Understandable, cause there's a lot of stuff.
         </p>
-        <p>
-          My main gig is as a software developer. Most of my experience is in
-          web dev with TypeScript, React and Node, but I've done some stuff in
-          Java, C#, C, and C++. It's what I studied, what I've been working the
-          past years, and so one might say I am a professional developer.
-          Because I am.
+        <p className="md:hidden text-center">
+          Hi! I'm Matt, and I make a bunch of stuff.
         </p>
-        <p>
+        <p className="-lg:text-center">
+          Mainly, I'm a software developer. Most of my experience is in web dev
+          with TypeScript, React and Node, but I've done some stuff in Java, C#,
+          C, and C++.{" "}
+          <span className="-md:hidden">
+            It's what I studied, what I've been working the past years, and so
+            one might say I am a professional developer. Because I am.
+          </span>
+        </p>
+        <p className="-lg:text-center">
           I also make videos for the YouTube channel Version Gamma, where I
           mostly discuss game design, although I occasionally branch out into
           other topics I'm passionate about. Apparently{" "}
@@ -83,16 +90,19 @@ const InfoPageContents = () => {
           thumbnails, and {getFormattedNumber(subscriberCount)} chose to stick
           around, so there's that.
         </p>
-        <p>
+        <p className="-lg:text-center">
           You might also notice I'm a little bit of an appreciator of things
-          involving cameras, from the personal photography I do, to the
-          videography that goes into the videos I produce. It's been a hobby of
-          mine for many years, and I use it as an excuse to visit interesting
-          and beautiful places, which we have in great abundance here in my home
-          of Aotearoa.
+          involving cameras{" "}
+          <span className="-md:hidden">
+            , from the personal photography I do, to the videography that goes
+            into the videos I produce
+          </span>
+          . It's been a hobby of mine for many years, and I use it as an excuse
+          to visit interesting and beautiful places, which we have in great
+          abundance here in my home of Aotearoa.
         </p>
       </span>
-      <span className="flex items-center justify-start min-w-[300px]">
+      <span className="flex items-center justify-center xl:justify-start min-w-[300px]">
         <SocialLinks />
       </span>
     </div>

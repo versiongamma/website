@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import Particles from "react-particles";
-import { Engine, Container } from "tsparticles-engine";
+import { Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
 
 import { usePageLoadTypeStore } from "../hooks/use-store";
@@ -13,10 +13,15 @@ import {
   Joyous,
   Website,
 } from "../components/software/projects";
+import useViewport from "../hooks/use-viewport";
+import ScreenWarning from "../components/screen-warning";
+
+const BREAKPOINT = 800;
 
 const SoftwarePage = () => {
   const [unload, setUnload] = useState(false);
   const { playPageFullLoad } = usePageLoadTypeStore();
+  const { width } = useViewport();
 
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
@@ -26,6 +31,8 @@ const SoftwarePage = () => {
     setUnload(true);
   };
 
+  const showScreenWarning = width < BREAKPOINT;
+
   return (
     <>
       <Background>
@@ -33,10 +40,16 @@ const SoftwarePage = () => {
           unload={unload}
           className="pt-14 pb-14 overflow-y-auto space-y-6"
         >
-          <Joyous />
-          <GameDB />
-          <Website />
-          <Horde />
+          {showScreenWarning ? (
+            <ScreenWarning />
+          ) : (
+            <>
+              <Joyous />
+              <GameDB />
+              <Website />
+              <Horde />
+            </>
+          )}
           <Particles
             init={particlesInit}
             options={{
@@ -61,7 +74,7 @@ const SoftwarePage = () => {
                 },
                 links: {
                   color: "#FFFFFF",
-                  distance: 300,
+                  distance: showScreenWarning ? 150 : 300,
                   enable: true,
                   opacity: 0.2,
                   width: 2,
@@ -77,10 +90,13 @@ const SoftwarePage = () => {
                   straight: false,
                 },
                 number: {
+                  density: {
+                    area: 10,
+                  },
                   value: 100,
                 },
                 opacity: {
-                  value: 0.2,
+                  value: 0,
                 },
                 shape: {
                   type: "circle",

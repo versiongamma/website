@@ -11,7 +11,13 @@ import ProjectView from "../project-view";
 const GameDB = () => (
   <ProjectView
     direction="right"
-    logo={<img className="rounded-xl" src="/static/gamedb.webp" width={64} />}
+    logo={
+      <img
+        className="rounded-xl xl:block hidden"
+        src="/static/gamedb.webp"
+        width={64}
+      />
+    }
     title="GameDB"
     copy="GameDB is a website and progressive web app designed to track and document a physical game collection. There
     are great collection trackers for other forms of media (like books or music) but all the solutions for games lacked

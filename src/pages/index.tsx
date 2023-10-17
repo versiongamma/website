@@ -13,6 +13,7 @@ import useViewport from "../hooks/use-viewport";
 import { applyConditionalStyle } from "../utils/apply";
 import Loading from "../components/index/loading";
 import CallToAction from "../components/index/call-to-action";
+import { breakpoints } from "../theme";
 
 type Props = {
   info?: boolean;
@@ -42,13 +43,15 @@ const IndexPage = ({ info }: Props) => {
 
   const topRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
-  const { height: viewportHeight } = useViewport();
+  const { width: viewportWidth, height: viewportHeight } = useViewport();
+
+  const hideIntroPage = viewportWidth <= breakpoints.md;
 
   useEffect(() => {
     setLoaded(true);
     setUnload(false);
 
-    if (onInfoPage) {
+    if (onInfoPage || hideIntroPage) {
       setWaitingOnInitialLoad(false);
       infoRef.current?.scrollIntoView({ behavior: "instant" });
       return;
@@ -95,7 +98,7 @@ const IndexPage = ({ info }: Props) => {
         // displayed when they're not supposed to
         style={{ opacity: loaded ? 1 : 0 }}
         className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
-          loaded,
+          loaded && !hideIntroPage,
           "overflow-y-auto",
           "overflow-y-hidden"
         )}`}

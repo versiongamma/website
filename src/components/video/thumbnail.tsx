@@ -20,14 +20,11 @@ const Thumbnail = ({ id, title, img, publishedDate }: Props) => {
 
   return (
     <a
-      className="flex flex-col p-4 rounded-xl hover-bg"
+      className="flex flex-col p-4 rounded-xl hover-bg w-[320px] xl:w-[480px] 2xl:w-[640px]"
       href={url}
       target="_blank"
     >
-      <img
-        src={img}
-        className="w-[480px] h-[270px] 2xl:w-[640px] 2xl:h-[360px]"
-      />
+      <img src={img} />
       <h1 className="font-heading font-semibold text-lg mt-1 text-white 2xl:text-2xl 2xl:mt-2">
         {title}
       </h1>
@@ -40,7 +37,7 @@ const Thumbnail = ({ id, title, img, publishedDate }: Props) => {
 
 // https://github.com/themesberg/flowbite/blob/main/content/components/skeleton.md
 export const ThumbnailSkeleton = () => (
-  <Skeleton className="w-[480px]  2xl:w-[640px] h-[270px] 2xl:h-[360px]">
+  <Skeleton className="w-[320px] h-[180px] xl:w-[480px] xl:h-[270px] 2xl:w-[640px] 2xl:h-[360px]">
     <BiVideoRecording className="w-12 h-12" />
   </Skeleton>
 );
