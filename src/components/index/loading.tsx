@@ -10,7 +10,7 @@ type Props = {
 const Loading = ({ unload, hide }: Props) => {
   const [unmount, setUnmount] = useState(false);
 
-  const [style] = useFadeIn(unload);
+  const [style] = useFadeIn(!unload);
 
   useEffect(() => {
     if (unload) {

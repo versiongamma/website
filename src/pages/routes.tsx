@@ -1,5 +1,5 @@
 import IndexPage from ".";
-import PhotoPage from "./photo";
+import PhotosPage from "./photos";
 import SoftwarePage from "./software";
 import VideoPage from "./video";
 
@@ -17,8 +17,8 @@ export const routes = [
     element: <VideoPage />,
   },
   {
-    path: "/photo",
-    element: <PhotoPage />,
+    path: "/photos",
+    element: <PhotosPage />,
   },
   {
     path: "/software",
@@ -39,7 +39,7 @@ export const PATHNAME_TO_INFO_MAP: Record<
   "/video": {
     indicatorPosition: -24,
   },
-  "/photo": {
+  "/photos": {
     indicatorPosition: 44,
   },
   "/software": {

@@ -12,7 +12,7 @@ const useWaitForImgLoad = (src: string, callback?: () => void) => {
       }
     };
     preloadedImage.src = src;
-  }, []);
+  }, [src, loaded, callback]);
 
   return loaded;
 };

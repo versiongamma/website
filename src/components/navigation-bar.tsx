@@ -74,8 +74,8 @@ const NavigationBar = ({
   const [navigateToVideo] = useNavigate("/video", 500, [
     () => onNavigate("/video"),
   ]);
-  const [navigateToPhoto] = useNavigate("/photo", 500, [
-    () => onNavigate("/photo"),
+  const [navigateToPhoto] = useNavigate("/photos", 500, [
+    () => onNavigate("/photos"),
   ]);
   const [navigateToSoftware] = useNavigate("/software", 500, [
     () => onNavigate("/software"),
@@ -84,7 +84,7 @@ const NavigationBar = ({
   const actions = [
     { icon: BiSolidInfoCircle, navigate: navigateToInfo, pathname: "/info" },
     { icon: BiSolidVideo, navigate: navigateToVideo, pathname: "/video" },
-    { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: "/photo" },
+    { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: "/photos" },
     { icon: BiCodeBlock, navigate: navigateToSoftware, pathname: "/software" },
   ];
 
