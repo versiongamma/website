@@ -1,7 +1,7 @@
-import { BiVideoRecording } from "react-icons/bi";
+import { BiVideoRecording } from 'react-icons/bi';
 
-import useWaitForImgLoad from "../../hooks/use-wait-for-img-load";
-import Skeleton from "../skeleton";
+import useWaitForImgLoad from '../../hooks/use-wait-for-img-load';
+import Skeleton from '../skeleton';
 
 type Props = {
   id: string;
@@ -23,6 +23,7 @@ const Thumbnail = ({ id, title, img, publishedDate }: Props) => {
       className="flex flex-col p-4 rounded-xl hover-bg w-[320px] xl:w-[480px] 2xl:w-[640px]"
       href={url}
       target="_blank"
+      rel="noreferrer"
     >
       <img src={img} />
       <h1 className="font-heading font-semibold text-lg mt-1 text-white 2xl:text-2xl 2xl:mt-2">

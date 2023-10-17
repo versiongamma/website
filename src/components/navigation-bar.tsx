@@ -3,14 +3,14 @@ import {
   BiSolidVideo,
   BiSolidCamera,
   BiCodeBlock,
-} from "react-icons/bi";
+} from 'react-icons/bi';
 
-import { useLocation } from "react-router-dom";
-import useNavigate from "../hooks/use-navigate";
-import { applyConditionally } from "../utils/apply";
-import { animated, useSpring, useTrail } from "@react-spring/web";
-import { usePageLoadTypeStore } from "../hooks/use-store";
-import { PATHNAME_TO_INFO_MAP } from "../pages/routes";
+import { useLocation } from 'react-router-dom';
+import useNavigate from '../hooks/use-navigate';
+import { applyConditionally } from '../utils/apply';
+import { animated, useSpring, useTrail } from '@react-spring/web';
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import { PATHNAME_TO_INFO_MAP } from '../pages/routes';
 
 type Props = {
   shown: boolean;
@@ -67,25 +67,33 @@ const NavigationBar = ({
     handleNavigate && handleNavigate();
   };
 
-  const [navigateToInfo] = useNavigate("/info", 500, [
-    () => onNavigate("/info"),
+  const [navigateToInfo] = useNavigate('/info', 500, [
+    () => onNavigate('/info'),
   ]);
 
-  const [navigateToVideo] = useNavigate("/video", 500, [
-    () => onNavigate("/video"),
+  const [navigateToVideo] = useNavigate('/video', 500, [
+    () => onNavigate('/video'),
   ]);
-  const [navigateToPhoto] = useNavigate("/photos", 500, [
-    () => onNavigate("/photos"),
+  const [navigateToPhoto] = useNavigate('/photos', 500, [
+    () => onNavigate('/photos'),
   ]);
-  const [navigateToSoftware] = useNavigate("/software", 500, [
-    () => onNavigate("/software"),
+  const [navigateToSoftware] = useNavigate('/software', 500, [
+    () => onNavigate('/software'),
   ]);
 
   const actions = [
-    { icon: BiSolidInfoCircle, navigate: navigateToInfo, pathname: "/info" },
-    { icon: BiSolidVideo, navigate: navigateToVideo, pathname: "/video" },
-    { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: "/photos" },
-    { icon: BiCodeBlock, navigate: navigateToSoftware, pathname: "/software" },
+    {
+      icon: BiSolidInfoCircle,
+      navigate: navigateToInfo,
+      pathname: '/info',
+    },
+    { icon: BiSolidVideo, navigate: navigateToVideo, pathname: '/video' },
+    { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: '/photos' },
+    {
+      icon: BiCodeBlock,
+      navigate: navigateToSoftware,
+      pathname: '/software',
+    },
   ];
 
   return (

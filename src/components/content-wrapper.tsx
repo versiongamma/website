@@ -1,4 +1,4 @@
-import { animated, useSpring } from "@react-spring/web";
+import { animated, useSpring } from '@react-spring/web';
 
 type Props = {
   unload: boolean;
@@ -31,11 +31,11 @@ const ContentWrapper = ({
   return (
     <animated.div className="h-screen w-screen" style={springs} hidden={hide}>
       <div
-        className={`content-wrap ${backgroundClassName ?? ""}`}
+        className={`content-wrap ${backgroundClassName ?? ''}`}
         style={backgroundStyle}
       >
         <main
-          className={`flex flex-col w-full h-full relative ${className ?? ""}`}
+          className={`flex flex-col w-full h-full relative ${className ?? ''}`}
         >
           {children}
         </main>

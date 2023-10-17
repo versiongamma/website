@@ -1,20 +1,20 @@
-import { useCallback, useState } from "react";
-import Particles from "react-particles";
-import { Engine } from "tsparticles-engine";
-import { loadSlim } from "tsparticles-slim";
+import { useCallback, useState } from 'react';
+import Particles from 'react-particles';
+import { Engine } from 'tsparticles-engine';
+import { loadSlim } from 'tsparticles-slim';
 
-import { usePageLoadTypeStore } from "../hooks/use-store";
-import Background from "../components/background";
-import ContentWrapper from "../components/content-wrapper";
-import NavigationBar from "../components/navigation-bar";
+import Background from '../components/background';
+import ContentWrapper from '../components/content-wrapper';
+import NavigationBar from '../components/navigation-bar';
+import ScreenWarning from '../components/screen-warning';
 import {
   GameDB,
   Horde,
   Joyous,
   Website,
-} from "../components/software/projects";
-import useViewport from "../hooks/use-viewport";
-import ScreenWarning from "../components/screen-warning";
+} from '../components/software/projects';
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import useViewport from '../hooks/use-viewport';
 
 const BREAKPOINT = 800;
 
@@ -70,20 +70,20 @@ const SoftwarePage = () => {
               },
               particles: {
                 color: {
-                  value: "#FFFFFF",
+                  value: '#FFFFFF',
                 },
                 links: {
-                  color: "#FFFFFF",
+                  color: '#FFFFFF',
                   distance: showScreenWarning ? 150 : 300,
                   enable: true,
                   opacity: 0.2,
                   width: 2,
                 },
                 move: {
-                  direction: "none",
+                  direction: 'none',
                   enable: true,
                   outModes: {
-                    default: "bounce",
+                    default: 'bounce',
                   },
                   random: false,
                   speed: 1,
@@ -99,7 +99,7 @@ const SoftwarePage = () => {
                   value: 0,
                 },
                 shape: {
-                  type: "circle",
+                  type: 'circle',
                 },
                 size: {
                   value: { min: 5, max: 10 },

@@ -4,9 +4,9 @@ import {
   SiNodedotjs,
   SiReact,
   SiAmazonaws,
-} from "react-icons/si";
+} from 'react-icons/si';
 
-import ProjectView from "../project-view";
+import ProjectView from '../project-view';
 
 const Joyous = () => (
   <ProjectView
@@ -26,6 +26,7 @@ const Joyous = () => (
         className="text-link text-lg 2xl:text-2xl"
         href="https://joyoushq.com"
         target="_blank"
+        rel="noreferrer"
       >
         joyoushq.com
       </a>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useViewport = () => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -9,10 +9,10 @@ const useViewport = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
 
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
 
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
 

@@ -1,5 +1,5 @@
-import { usePageLoadTypeStore } from "../hooks/use-store";
-import { applyConditionalStyle } from "../utils/apply";
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import { applyConditionalStyle } from '../utils/apply';
 
 type Props = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ const Background = ({ children }: Props) => {
     <div
       className={`w-screen h-screen flex items-center flex-col justify-center background-gradient ${applyConditionalStyle(
         playPageFullLoad,
-        "animate-fadeIn"
+        'animate-fadeIn'
       )}`}
     >
       {children}

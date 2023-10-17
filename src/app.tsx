@@ -1,7 +1,7 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import "./app.css";
-import { routes } from "./pages/routes";
+import './app.css';
+import { routes } from './pages/routes';
 
 const router = createBrowserRouter(routes);
 

@@ -1,4 +1,4 @@
-import { To, useLinkClickHandler } from "react-router-dom";
+import { To, useLinkClickHandler } from 'react-router-dom';
 
 const useNavigate = (to: To, delay?: number, handlers?: (() => void)[]) => {
   const handleLoadPage = useLinkClickHandler(to);

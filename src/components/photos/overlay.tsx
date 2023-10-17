@@ -1,7 +1,7 @@
-import { animated } from "@react-spring/web";
-import { BiCaretLeftCircle, BiCaretRightCircle } from "react-icons/bi";
-import useFadeIn from "../../hooks/use-fade";
-import { useEffect, useState } from "react";
+import { animated } from '@react-spring/web';
+import { BiCaretLeftCircle, BiCaretRightCircle } from 'react-icons/bi';
+import useFadeIn from '../../hooks/use-fade';
+import { useEffect, useState } from 'react';
 
 type Props = {
   src: string | null;
@@ -40,7 +40,7 @@ const Overlay = ({ src, onNext, onPrevious, onClickAway }: Props) => {
         <BiCaretLeftCircle className="w-16 h-16" />
       </button>
       <img
-        src={src ?? ""}
+        src={src ?? ''}
         onClick={(e) => {
           e.stopPropagation();
         }}

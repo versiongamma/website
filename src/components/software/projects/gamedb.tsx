@@ -4,9 +4,9 @@ import {
   SiVercel,
   SiTypescript,
   SiReact,
-} from "react-icons/si";
+} from 'react-icons/si';
 
-import ProjectView from "../project-view";
+import ProjectView from '../project-view';
 
 const GameDB = () => (
   <ProjectView
@@ -28,6 +28,7 @@ const GameDB = () => (
         className="text-link text-lg 2xl:text-2xl"
         href="https://github.com/versiongamma/gamedb"
         target="_blank"
+        rel="noreferrer"
       >
         View on GitHub
       </a>

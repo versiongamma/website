@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate as useReactRouterNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate as useReactRouterNavigate } from 'react-router-dom';
 
-import ContentWrapper from "../components/content-wrapper";
-import ImageBackground from "../components/index/image-background";
-import InfoPageContents from "../components/index/info-page-contents";
-import ScrollDownIndicator from "../components/index/scroll-down-indicator";
-import NavigationBar from "../components/navigation-bar";
-import TitleBar from "../components/title-bar";
-import useNavigate from "../hooks/use-navigate";
-import { usePageLoadTypeStore } from "../hooks/use-store";
-import useViewport from "../hooks/use-viewport";
-import { applyConditionalStyle } from "../utils/apply";
-import Loading from "../components/index/loading";
-import CallToAction from "../components/index/call-to-action";
-import { breakpoints } from "../theme";
+import ContentWrapper from '../components/content-wrapper';
+import ImageBackground from '../components/index/image-background';
+import InfoPageContents from '../components/index/info-page-contents';
+import ScrollDownIndicator from '../components/index/scroll-down-indicator';
+import NavigationBar from '../components/navigation-bar';
+import TitleBar from '../components/title-bar';
+import useNavigate from '../hooks/use-navigate';
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import useViewport from '../hooks/use-viewport';
+import { applyConditionalStyle } from '../utils/apply';
+import Loading from '../components/index/loading';
+import CallToAction from '../components/index/call-to-action';
+import { breakpoints } from '../theme';
 
 type Props = {
   info?: boolean;
@@ -37,9 +37,9 @@ const IndexPage = ({ info }: Props) => {
     setUnload(true);
   };
 
-  const [navigateToVideo] = useNavigate("/video", 500, [handleNavigate]);
-  const [navigateToPhoto] = useNavigate("/photos", 500, [handleNavigate]);
-  const [navigateToSoftware] = useNavigate("/software", 500, [handleNavigate]);
+  const [navigateToVideo] = useNavigate('/video', 500, [handleNavigate]);
+  const [navigateToPhoto] = useNavigate('/photos', 500, [handleNavigate]);
+  const [navigateToSoftware] = useNavigate('/software', 500, [handleNavigate]);
 
   const topRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ const IndexPage = ({ info }: Props) => {
 
     if (onInfoPage || hideIntroPage) {
       setWaitingOnInitialLoad(false);
-      infoRef.current?.scrollIntoView({ behavior: "instant" });
+      infoRef.current?.scrollIntoView({ behavior: 'instant' });
       return;
     }
 
@@ -65,12 +65,12 @@ const IndexPage = ({ info }: Props) => {
     const position = event.currentTarget.scrollTop;
 
     if (position === viewportHeight) {
-      navigate("/info");
+      navigate('/info');
       setNavBarHasAppeared(true);
       setShowNavBar(true);
     }
     if (position === 0) {
-      navigate("/");
+      navigate('/');
       setShowScrollIndicator(true);
     }
 
@@ -99,8 +99,8 @@ const IndexPage = ({ info }: Props) => {
         style={{ opacity: loaded ? 1 : 0 }}
         className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
           loaded && !hideIntroPage,
-          "overflow-y-auto",
-          "overflow-y-hidden"
+          'overflow-y-auto',
+          'overflow-y-hidden'
         )}`}
         onScroll={handleScroll}
         ref={topRef}
@@ -116,14 +116,14 @@ const IndexPage = ({ info }: Props) => {
             >
               VIDEOS
             </a>
-            ,{" "}
+            ,{' '}
             <a
               className="hover:text-orange-300 transition-colors cursor-pointer"
               onClick={navigateToPhoto}
             >
               PHOTOS
             </a>
-            ,{" "}
+            ,{' '}
             <a
               className="hover:text-orange-300 transition-colors cursor-pointer"
               onClick={navigateToSoftware}

@@ -1,5 +1,5 @@
-import axiosClient from "axios";
-import { setupCache } from "axios-cache-interceptor";
+import axiosClient from 'axios';
+import { setupCache } from 'axios-cache-interceptor';
 
 const axios = setupCache(axiosClient);
 

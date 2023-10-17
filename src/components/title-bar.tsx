@@ -1,5 +1,4 @@
-import { animated, useTrail } from "@react-spring/web";
-import { useEffect } from "react";
+import { animated, useTrail } from '@react-spring/web';
 
 type Props = {
   shown: boolean;
@@ -33,7 +32,7 @@ const TitleBar = ({ shown, hide, children }: Props) => {
         className={`font-heading font-bold xl:text-8xl text-6xl text-white ml-[40px]`}
         style={trails[0]}
       >
-        HEY, I'M MATT
+        HEY, I’M MATT
       </animated.h1>
       <div>
         <animated.p

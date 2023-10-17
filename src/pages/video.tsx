@@ -1,45 +1,45 @@
-import { useEffect, useMemo, useState } from "react";
-import axios from "../axios";
+import { useEffect, useMemo, useState } from 'react';
+import NoSSR from 'react-no-ssr';
 
-import Background from "../components/background";
-import ContentWrapper from "../components/content-wrapper";
-import NavigationBar from "../components/navigation-bar";
-import { usePageLoadTypeStore } from "../hooks/use-store";
 import {
   VideoResponse,
   YoutubeApiPlaylistResponse,
-} from "../api/routes/video/types";
-import { didVideoRequestSucceed } from "../api/routes/video/utils";
-import Thumbnail, { ThumbnailSkeleton } from "../components/video/thumbnail";
-import useWaitForImgLoad from "../hooks/use-wait-for-img-load";
-import { gradient } from "../theme";
-import NoSSR from "react-no-ssr";
+} from '../api/routes/video/types';
+import { didVideoRequestSucceed } from '../api/routes/video/utils';
+import axios from '../axios';
+import Background from '../components/background';
+import ContentWrapper from '../components/content-wrapper';
+import NavigationBar from '../components/navigation-bar';
+import Thumbnail, { ThumbnailSkeleton } from '../components/video/thumbnail';
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import useWaitForImgLoad from '../hooks/use-wait-for-img-load';
+import { gradient } from '../theme';
 
-const GET_VIDEOS_URL = "/api/videos/versiongamma";
+const GET_VIDEOS_URL = '/api/videos/versiongamma';
 const THUMBNAIL_SKELETON_COUNT = 20;
 const BACKGROUND_IMAGES = [
   {
-    url: "/static/video-bg.webp",
+    url: '/static/video-bg.webp',
     style: {
       background: `${gradient},url("/static/video-bg.webp")`,
-      backgroundPosition: "left",
-      backgroundSize: "cover",
+      backgroundPosition: 'left',
+      backgroundSize: 'cover',
     },
   },
   {
-    url: "/static/video-bg-2.webp",
+    url: '/static/video-bg-2.webp',
     style: {
       background: `${gradient},url("/static/video-bg-2.webp")`,
-      backgroundPosition: "center",
-      backgroundSize: "cover",
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
     },
   },
   {
-    url: "/static/video-bg-3.webp",
+    url: '/static/video-bg-3.webp',
     style: {
       background: `${gradient},url("/static/video-bg-3.webp")`,
-      backgroundPosition: "52% 50%",
-      backgroundSize: "cover",
+      backgroundPosition: '52% 50%',
+      backgroundSize: 'cover',
     },
   },
 ];
@@ -110,6 +110,7 @@ const VideoPage = () => {
                     },
                   }) => (
                     <Thumbnail
+                      key={videoId}
                       id={videoId}
                       img={url}
                       title={title}

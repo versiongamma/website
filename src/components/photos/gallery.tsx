@@ -1,20 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
-import { RenderImageProps } from "react-photo-gallery";
-import NoSSR from "react-no-ssr";
+import { animated } from '@react-spring/web';
+import { useCallback, useEffect, useState } from 'react';
+import NoSSR from 'react-no-ssr';
+import { RenderImageProps } from 'react-photo-gallery';
 
+import ReactPhotoGallery, { PhotoClickHandler } from 'react-photo-gallery';
 import {
   ImgurApiResponse,
   PhotosResponse,
-} from "../../api/routes/photos/types";
-import axios from "../../axios";
-import { didPhotosRequestSucceed } from "../../api/routes/photos/utils";
-import ReactPhotoGallery, { PhotoClickHandler } from "react-photo-gallery";
-import Overlay from "./overlay";
-import Image from "./image";
-import useFadeIn from "../../hooks/use-fade";
-import { animated } from "@react-spring/web";
+} from '../../api/routes/photos/types';
+import { didPhotosRequestSucceed } from '../../api/routes/photos/utils';
+import axios from '../../axios';
+import useFadeIn from '../../hooks/use-fade';
+import Image from './image';
+import Overlay from './overlay';
 
-const GET_IMAGES_URL = "/api/photos";
+const GET_IMAGES_URL = '/api/photos';
 
 const Gallery = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(

@@ -1,27 +1,27 @@
-import IndexPage from ".";
-import PhotosPage from "./photos";
-import SoftwarePage from "./software";
-import VideoPage from "./video";
+import IndexPage from '.';
+import PhotosPage from './photos';
+import SoftwarePage from './software';
+import VideoPage from './video';
 
 export const routes = [
   {
-    path: "/",
+    path: '/',
     element: <IndexPage />,
   },
   {
-    path: "/info",
+    path: '/info',
     element: <IndexPage info />,
   },
   {
-    path: "/video",
+    path: '/video',
     element: <VideoPage />,
   },
   {
-    path: "/photos",
+    path: '/photos',
     element: <PhotosPage />,
   },
   {
-    path: "/software",
+    path: '/software',
     element: <SoftwarePage />,
   },
 ];
@@ -30,19 +30,19 @@ export const PATHNAME_TO_INFO_MAP: Record<
   string,
   { indicatorPosition: number }
 > = {
-  "/": {
+  '/': {
     indicatorPosition: -92,
   },
-  "/info": {
+  '/info': {
     indicatorPosition: -92,
   },
-  "/video": {
+  '/video': {
     indicatorPosition: -24,
   },
-  "/photos": {
+  '/photos': {
     indicatorPosition: 44,
   },
-  "/software": {
+  '/software': {
     indicatorPosition: 112,
   },
 };

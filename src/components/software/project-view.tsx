@@ -1,9 +1,9 @@
-import useWaitForImgLoad from "../../hooks/use-wait-for-img-load";
-import { applyConditionalStyle } from "../../utils/apply";
-import { IconType } from "react-icons";
-import Skeleton from "../skeleton";
+import useWaitForImgLoad from '../../hooks/use-wait-for-img-load';
+import { applyConditionalStyle } from '../../utils/apply';
+import { IconType } from 'react-icons';
+import Skeleton from '../skeleton';
 
-type Direction = "left" | "right";
+type Direction = 'left' | 'right';
 
 type TechStackIconProps = {
   icons: IconType[];
@@ -21,7 +21,7 @@ const TechStackIcons = ({ icons }: TechStackIconProps) => (
 );
 
 const TITLE_TEXT_STYLE =
-  "text-white font-heading xl:text-5xl text-3xl font-semibold pt-2";
+  'text-white font-heading xl:text-5xl text-3xl font-semibold pt-2';
 
 type TitleProps = {
   direction: Direction;
@@ -32,7 +32,7 @@ type TitleProps = {
 const Title = ({ direction, logo, title }: TitleProps) => {
   return (
     <span className="flex items-center space-x-2">
-      {direction === "left" ? (
+      {direction === 'left' ? (
         <>
           {title && <h1 className={TITLE_TEXT_STYLE}>{title}</h1>}
           {logo}
@@ -47,7 +47,7 @@ const Title = ({ direction, logo, title }: TitleProps) => {
   );
 };
 
-const DIVIDER_STYLE = "w-[2px] h-20 bg-slate-200/20 border-none rounded-full";
+const DIVIDER_STYLE = 'w-[2px] h-20 bg-slate-200/20 border-none rounded-full';
 
 type HeadingProps = {
   direction: Direction;
@@ -57,12 +57,12 @@ type HeadingProps = {
 const Heading = ({ direction, icons, title, logo }: HeadingProps) => (
   <div
     className={`w-full flex items-center space-x-6 ${applyConditionalStyle(
-      direction === "left",
-      "justify-end",
-      "justify-start"
+      direction === 'left',
+      'justify-end',
+      'justify-start'
     )}`}
   >
-    {direction === "left" ? (
+    {direction === 'left' ? (
       <>
         <TechStackIcons icons={icons} />
         <hr className={DIVIDER_STYLE} />
@@ -83,9 +83,9 @@ type BodyProps = { copy: string; link: React.ReactNode } & HeadingProps;
 const Body = ({ direction, title, logo, icons, copy, link }: BodyProps) => (
   <div
     className={`flex flex-col justify-center w-full h-full space-y-4 ${applyConditionalStyle(
-      direction === "left",
-      "items-end",
-      "items-start"
+      direction === 'left',
+      'items-end',
+      'items-start'
     )}`}
   >
     <Heading direction={direction} icons={icons} title={title} logo={logo} />
@@ -113,9 +113,9 @@ const PreviewImage = ({ direction, previewImgSrc }: PreviewImageProps) => {
   return (
     <span
       className={`flex self-center w-full ${applyConditionalStyle(
-        direction === "left",
-        "justify-start",
-        "justify-end"
+        direction === 'left',
+        'justify-start',
+        'justify-end'
       )}`}
     >
       <img className="rounded-xl w-[600px] 2xl:w-[800px]" src={previewImgSrc} />
@@ -134,19 +134,19 @@ const ProjectView = ({
 }: BodyProps & PreviewImageProps) => (
   <div
     className={`w-screen flex ${applyConditionalStyle(
-      direction === "left",
-      "justify-start",
-      "justify-end"
+      direction === 'left',
+      'justify-start',
+      'justify-end'
     )}`}
   >
     <div
       className={`flex min-h-[64px] z-10 bg-slate-800/20 p-4 space-x-4 ${applyConditionalStyle(
-        direction === "left",
-        "rounded-e-2xl",
-        "rounded-s-2xl"
+        direction === 'left',
+        'rounded-e-2xl',
+        'rounded-s-2xl'
       )}`}
     >
-      {direction === "left" ? (
+      {direction === 'left' ? (
         <>
           <PreviewImage previewImgSrc={previewImgSrc} direction={direction} />
           <Body

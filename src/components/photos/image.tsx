@@ -1,10 +1,10 @@
-import useWaitForImgLoad from "../../hooks/use-wait-for-img-load";
-import Skeleton from "../skeleton";
-import { RenderImageProps } from "react-photo-gallery";
-import { BiSolidPhotoAlbum } from "react-icons/bi";
+import useWaitForImgLoad from '../../hooks/use-wait-for-img-load';
+import Skeleton from '../skeleton';
+import { RenderImageProps } from 'react-photo-gallery';
+import { BiSolidPhotoAlbum } from 'react-icons/bi';
 
-import useFadeIn from "../../hooks/use-fade";
-import { animated } from "@react-spring/web";
+import useFadeIn from '../../hooks/use-fade';
+import { animated } from '@react-spring/web';
 
 const Image = ({ photo, index, onClick }: RenderImageProps) => {
   const { src, width, height } = photo;
