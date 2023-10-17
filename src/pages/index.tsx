@@ -45,7 +45,7 @@ const IndexPage = ({ info }: Props) => {
   const infoRef = useRef<HTMLDivElement>(null);
   const { width: viewportWidth, height: viewportHeight } = useViewport();
 
-  const hideIntroPage = viewportWidth <= breakpoints.md;
+  const hideIntroPage = !!viewportWidth && viewportWidth <= breakpoints.lg;
 
   useEffect(() => {
     setLoaded(true);
@@ -59,7 +59,7 @@ const IndexPage = ({ info }: Props) => {
 
     setWaitingOnInitialLoad(false);
     setShowScrollIndicator(true);
-  }, []);
+  }, [hideIntroPage]);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const position = event.currentTarget.scrollTop;

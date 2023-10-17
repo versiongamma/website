@@ -4,7 +4,7 @@ const gradient =
 const breakpoints = {
   sm: 480,
   md: 768,
-  lg: 1200,
+  lg: 976,
 } as const;
 
 export { gradient, breakpoints };

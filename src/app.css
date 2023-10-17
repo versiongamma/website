@@ -17,7 +17,8 @@ body {
   }
 
   .content-wrap {
-    @apply flex flex-col pb-14 w-screen h-screen overflow-hidden;
+    @apply flex flex-col w-screen h-screen overflow-hidden;
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
   }
 
   .text-link {

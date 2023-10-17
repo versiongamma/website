@@ -100,7 +100,7 @@ const NavigationBar = ({
     // Wrapper div is so bar doesn't show up until css is properly loaded
     <div style={{ opacity: !hide ? 1 : 0 }}>
       <animated.div
-        className="flex fixed w-screen h-14 bottom-0 bg-slate-700/20 items-center justify-center space-x-5 pb-[env(safe-area-inset-top)]"
+        className="flex fixed w-screen h-[calc(3.5rem+env(safe-area-inset-bottom))] bottom-0 bg-slate-700/20 items-center justify-center space-x-5 pb-[env(safe-area-inset-bottom)]"
         style={barStyle}
       >
         <animated.div
