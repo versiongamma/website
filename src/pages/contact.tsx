@@ -16,14 +16,26 @@ const ContactsPage = () => {
     setUnload(true);
   };
 
+  //   background-color: #ffffff;
+  // opacity: 0.8;
+  // background-image:  radial-gradient(#000000 0.8500000000000001px, transparent 0.8500000000000001px), radial-gradient(#000000 0.8500000000000001px, #ffffff 0.8500000000000001px);
+  // background-size: 34px 34px;
+  // background-position: 0 0,17px 17px;
+
   return (
     <>
       <Background>
         <ContentWrapper
           unload={unload}
           className="overflow-y-auto items-center md:justify-center"
+          backgroundStyle={{
+            backgroundImage: `radial-gradient(#FFFFFF 0.8500000000000001px, transparent 0.8500000000000001px), radial-gradient(#FFFFFF 0.8500000000000001px, #000000 0.8500000000000001px)`,
+            backgroundSize: '34px 34px',
+            backgroundPosition: '0 0,17px 17px',
+          }}
         >
-          <div className="flex flex-col  justify-center items-center -sm:items-start max-w-lg flex-grow-0 flex-shrink-0">
+          <div className="fixed top-0 left-0 w-screen h-screen bg-gradient" />
+          <div className="flex flex-col  justify-center items-center -sm:items-start max-w-lg flex-grow-0 z-10">
             <div className="flex flex-col items-center m-6">
               <h1 className="font-heading font-bold text-xl">
                 PLATFORMS & CONTACT

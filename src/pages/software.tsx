@@ -76,7 +76,7 @@ const SoftwarePage = () => {
                   color: '#FFFFFF',
                   distance: showScreenWarning ? 150 : 300,
                   enable: true,
-                  opacity: 0.2,
+                  opacity: 0.05,
                   width: 2,
                 },
                 move: {

@@ -1,4 +1,4 @@
-import { animated, useSpring } from "@react-spring/web";
+import { animated, useSpring } from '@react-spring/web';
 
 type Props = {
   shown: boolean;
@@ -23,8 +23,10 @@ const ImageBackground = ({ shown, unload, children }: Props) => {
     <animated.div
       className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always"
       style={{
-        background: 'url("/static/background.webp") right center fixed',
-        backgroundSize: "cover",
+        backgroundImage: 'url("/static/background.webp")',
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
         ...props,
       }}
     >

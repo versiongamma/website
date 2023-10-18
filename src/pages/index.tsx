@@ -6,7 +6,7 @@ import ImageBackground from '../components/index/image-background';
 import InfoPageContents from '../components/index/info-page-contents';
 import ScrollDownIndicator from '../components/index/scroll-down-indicator';
 import NavigationBar from '../components/navigation-bar';
-import TitleBar from '../components/title-bar';
+import TitleBar from '../components/index/title-bar';
 import useNavigate from '../hooks/use-navigate';
 import { usePageLoadTypeStore } from '../hooks/use-store';
 import useViewport from '../hooks/use-viewport';
@@ -22,9 +22,9 @@ type Props = {
 const IndexPage = ({ info }: Props) => {
   const onInfoPage = !!info;
 
-  const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(true);
+  const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(!onInfoPage);
   const [loaded, setLoaded] = useState(onInfoPage);
-  const [unload, setUnload] = useState(!onInfoPage);
+  const [unload, setUnload] = useState(false);
   const [showNavBar, setShowNavBar] = useState(onInfoPage);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const [navBarHasAppeared, setNavBarHasAppeared] = useState(onInfoPage);
@@ -134,7 +134,7 @@ const IndexPage = ({ info }: Props) => {
         </ImageBackground>
         <ScrollDownIndicator
           shown={showScrollIndicator && !unload}
-          hide={waitingOnInitialLoad && onInfoPage}
+          hide={waitingOnInitialLoad || onInfoPage}
           scrollElementRef={infoRef}
         />
         <div

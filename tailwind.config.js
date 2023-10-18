@@ -17,13 +17,12 @@ module.exports = {
         lg: '976px',
         '-lg': { max: '976px' },
         xl: '1440px',
+        '-xl': { max: '1200px' },
         '2xl': '2400px',
       },
       backgroundImage: {
-        photos:
-          'linear-gradient(126deg,rgba(163, 72, 212, 0.7) 0%, rgba(240, 86, 187, 0.7) 33%, rgba(255, 96, 0, 0.7) 100%), url("/static/photos-bg.webp") ',
-        video:
-          'linear-gradient(126deg,rgba(163, 72, 212, 0.7) 0%, rgba(240, 86, 187, 0.7) 33%, rgba(255, 96, 0, 0.7) 100%), url("/static/video-bg-2.webp") ',
+        gradient:
+          'linear-gradient(126deg,rgba(163,72,212,.7) 0%,rgba(240,86,187,.7) 33%,rgba(255,96,0,.7) 100%)',
       },
       animation: {
         slideIn: 'slideIn 0.5s ease-in-out',
