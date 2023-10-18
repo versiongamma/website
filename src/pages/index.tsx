@@ -134,7 +134,7 @@ const IndexPage = ({ info }: Props) => {
         </ImageBackground>
         <ScrollDownIndicator
           shown={showScrollIndicator && !unload}
-          hide={waitingOnInitialLoad}
+          hide={waitingOnInitialLoad && onInfoPage}
           scrollElementRef={infoRef}
         />
         <div
@@ -143,7 +143,7 @@ const IndexPage = ({ info }: Props) => {
         >
           <ContentWrapper
             unload={unload}
-            className="flex items-center justify-center w-screen -md:overflow-y-auto"
+            className="flex items-center justify-center w-screen"
           >
             <InfoPageContents />
             <CallToAction shown={showNavBar} hide={false} />

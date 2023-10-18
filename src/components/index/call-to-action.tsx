@@ -1,4 +1,4 @@
-import { animated, useSpring } from "@react-spring/web";
+import { animated, useSpring } from '@react-spring/web';
 
 const ENTER_DELAY = 1000;
 
@@ -24,7 +24,7 @@ const CallToAction = ({ shown, hide }: Props) => {
       style={springs}
       src="/static/call-to-action.webp"
       width={256}
-      className="absolute bottom-4 -md:left-[40%] left-1/2 -sm:hidden"
+      className="absolute bottom-4 -md:left-[40%] left-1/2 -sm:hidden -vmd:hidden"
     />
   );
 };

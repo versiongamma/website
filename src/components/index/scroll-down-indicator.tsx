@@ -1,5 +1,5 @@
-import { animated, useSpring } from "@react-spring/web";
-import { FiArrowDownCircle } from "react-icons/fi";
+import { animated, useSpring } from '@react-spring/web';
+import { FiArrowDownCircle } from 'react-icons/fi';
 
 const ENTER_DELAY = 2000;
 
@@ -26,7 +26,7 @@ const ScrollDownIndicator = ({ shown, hide, scrollElementRef }: Props) => {
       className={`absolute bottom-10 left-1/2`}
       style={springs}
       onClick={() =>
-        scrollElementRef.current?.scrollIntoView({ behavior: "smooth" })
+        scrollElementRef.current?.scrollIntoView({ behavior: 'smooth' })
       }
     >
       <FiArrowDownCircle className="w-20 h-20 text-white animate-bounce" />

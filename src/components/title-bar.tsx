@@ -26,7 +26,7 @@ const TitleBar = ({ shown, hide, children }: Props) => {
   );
 
   return (
-    <div className="ml-[25vw] relative">
+    <div className="ml-[23vw] relative">
       <div className="absolute xl:h-80 h-60 w-1 bg-white rotate-[30deg] translate-x-[-30px] translate-y-[-100px]"></div>
       <animated.h1
         className={`font-heading font-bold xl:text-8xl text-6xl text-white ml-[40px]`}
@@ -35,12 +35,12 @@ const TitleBar = ({ shown, hide, children }: Props) => {
         HEY, I’M MATT
       </animated.h1>
       <div>
-        <animated.p
+        <animated.h1
           className={`text-white xl:text-3xl text-xl`}
           style={trails[1]}
         >
           I make {children}, and more.
-        </animated.p>
+        </animated.h1>
       </div>
     </div>
   );

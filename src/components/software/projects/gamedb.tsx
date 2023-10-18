@@ -33,7 +33,7 @@ const GameDB = () => (
         View on GitHub
       </a>
     }
-    previewImgSrc="https://user-images.githubusercontent.com/37131904/261836227-732ffac5-dc0e-4a20-87a0-f5c417191f13.png"
+    previewImgSrc="/static/gamedb-preview.webp"
   />
 );
 

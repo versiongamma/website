@@ -3,6 +3,7 @@ import {
   BiSolidVideo,
   BiSolidCamera,
   BiCodeBlock,
+  BiSolidContact,
 } from 'react-icons/bi';
 
 import { useLocation } from 'react-router-dom';
@@ -46,7 +47,7 @@ const NavigationBar = ({
   );
 
   const [iconStyles] = useTrail(
-    4,
+    5,
     () => ({
       from: { y: 60 },
       to: { y: 0 },
@@ -71,6 +72,10 @@ const NavigationBar = ({
     () => onNavigate('/info'),
   ]);
 
+  const [navigateToContact] = useNavigate('/contact', 500, [
+    () => onNavigate('/contact'),
+  ]);
+
   const [navigateToVideo] = useNavigate('/video', 500, [
     () => onNavigate('/video'),
   ]);
@@ -86,6 +91,11 @@ const NavigationBar = ({
       icon: BiSolidInfoCircle,
       navigate: navigateToInfo,
       pathname: '/info',
+    },
+    {
+      icon: BiSolidContact,
+      navigate: navigateToContact,
+      pathname: '/contact',
     },
     { icon: BiSolidVideo, navigate: navigateToVideo, pathname: '/video' },
     { icon: BiSolidCamera, navigate: navigateToPhoto, pathname: '/photos' },
