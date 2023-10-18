@@ -50,6 +50,7 @@ const ContactsPage = () => {
                   icon="/static/me.webp"
                 />
               </span>
+              <hr className="my-4 border-white/30" />
               <Heading name="Instagram" Icon={BiLogoInstagram} />
               <span className="flex flex-row mb-4">
                 <Account
@@ -58,6 +59,7 @@ const ContactsPage = () => {
                   icon="/static/me.webp"
                 />
               </span>
+              <hr className="my-4 border-white/30" />
               <Heading name="GitHub" Icon={BiLogoGithub} />
               <span className="flex flex-row mb-4">
                 <Account
