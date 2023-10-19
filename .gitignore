@@ -3,3 +3,5 @@ yarn-error.log
 build/
 .env
 .DS_Store
+public/static/*.png
+public/static/*.jpg

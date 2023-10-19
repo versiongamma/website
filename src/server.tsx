@@ -1,31 +1,34 @@
-import "dotenv/config";
-import express, { Request as ExpressRequest } from "express";
-import { readFile } from "fs";
-import path from "path";
-import { createElement } from "react";
-import { renderToString } from "react-dom/server";
+import 'dotenv/config';
+import express, { Request as ExpressRequest } from 'express';
+import { readFile } from 'fs';
+import path from 'path';
+import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
 import {
   StaticHandlerContext,
   StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
-} from "react-router-dom/server";
+} from 'react-router-dom/server';
 
-import { routes } from "./pages/routes";
+import { routes } from './pages/routes';
+import videoRouter from './api/routes/video/video';
+import photosRouter from './api/routes/photos/photos';
+import { logRequest } from './api/utils/logger';
 
 const createFetchRequest = (req: ExpressRequest) => {
-  let origin = `${req.protocol}://${req.get("host")}`;
-  let url = new URL(req.originalUrl || req.url, origin);
+  const origin = `${req.protocol}://${req.get('host')}`;
+  const url = new URL(req.originalUrl || req.url, origin);
 
-  let controller = new AbortController();
-  req.on("close", () => controller.abort());
+  const controller = new AbortController();
+  req.on('close', () => controller.abort());
 
-  let headers = new Headers();
+  const headers = new Headers();
 
-  for (let [key, values] of Object.entries(req.headers)) {
+  for (const [key, values] of Object.entries(req.headers)) {
     if (values) {
       if (Array.isArray(values)) {
-        for (let value of values) {
+        for (const value of values) {
           headers.append(key, value);
         }
       } else {
@@ -34,13 +37,13 @@ const createFetchRequest = (req: ExpressRequest) => {
     }
   }
 
-  let init: RequestInit = {
+  const init: RequestInit = {
     method: req.method,
     headers,
     signal: controller.signal,
   };
 
-  if (req.method !== "GET" && req.method !== "HEAD") {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
     init.body = req.body;
   }
 
@@ -50,40 +53,45 @@ const createFetchRequest = (req: ExpressRequest) => {
 const app = express();
 const handler = createStaticHandler(routes);
 
-app.set("trust proxy", true);
+app.set('trust proxy', true);
+
+app.use(videoRouter);
+app.use(photosRouter);
 
 // Serve static files (any request for a path with a file extension)
-app.get(/.*\..*/, (req, res) => {
+app.get(/.*\..*/, async (req, res) => {
+  logRequest(req);
+
   const requestedFilePath =
-    req.path[req.path.length - 1] === "/" ? req.path.slice(0, -1) : req.path;
+    req.path[req.path.length - 1] === '/' ? req.path.slice(0, -1) : req.path;
   const filePath = path.join(__dirname, `public/${requestedFilePath}`);
 
-  console.log(`Serving [${requestedFilePath}]`);
   res.sendFile(filePath);
 });
 
 // Serve site pages
-app.get("*", async (req, res) => {
-  console.log(
-    "\x1b[36m%s\x1b[0m",
-    `Route [${req.url}] requested from ${req.ip} - ${req.headers["user-agent"]}`
-  );
-
+app.get('*', async (req, res) => {
+  logRequest(req);
+  
   const fetchRequest = createFetchRequest(req);
   const context = (await handler.query(fetchRequest)) as StaticHandlerContext;
 
-  let router = createStaticRouter(handler.dataRoutes, context);
+  if (context.statusCode === 404) {
+    return res.redirect('/');
+  }
+
+  const router = createStaticRouter(handler.dataRoutes, context);
 
   const app = renderToString(
     createElement(StaticRouterProvider, { router, context })
   );
 
-  const indexFile = path.join(__dirname, "public/index.html");
+  const indexFile = path.join(__dirname, 'public/index.html');
 
-  readFile(indexFile, "utf8", (err, data) => {
+  readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
-      console.error("Something went wrong: ", err);
-      return res.status(500).send("Oops, better luck next time!");
+      console.error('Something went wrong: ', err);
+      return res.status(500).send('Oops, better luck next time!');
     }
 
     console.log(`Serving [${req.url}]`);

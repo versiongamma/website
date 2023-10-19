@@ -3,5 +3,34 @@
 @tailwind utilities;
 
 body {
-  @apply font-body;
+  @apply font-body bg-black text-white;
+}
+
+@layer components {
+  .gradient {
+    background: linear-gradient(
+      126deg,
+      rgba(163, 72, 212, 0.7) 0%,
+      rgba(240, 86, 187, 0.7) 33%,
+      rgba(255, 96, 0, 0.7) 100%
+    );
+  }
+
+  .content-wrap {
+    @apply flex flex-col w-screen h-screen overflow-hidden;
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
+
+  .text-link {
+    @apply text-orange-300 hover:text-orange-500 transition-colors cursor-pointer;
+  }
+
+  .background-gradient {
+    background: black;
+    @apply gradient;
+  }
+
+  .hover-bg {
+    @apply hover:bg-slate-800/40 transition-colors;
+  }
 }

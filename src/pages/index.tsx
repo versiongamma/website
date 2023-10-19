@@ -1,31 +1,163 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate as useReactRouterNavigate } from 'react-router-dom';
 
-const Index = () => {
-  const [count, setCount] = useState(0);
+import ContentWrapper from '../components/content-wrapper';
+import ImageBackground from '../components/index/image-background';
+import InfoPageContents from '../components/index/info-page-contents';
+import ScrollDownIndicator from '../components/index/scroll-down-indicator';
+import NavigationBar from '../components/navigation-bar';
+import TitleBar from '../components/index/title-bar';
+import useNavigate from '../hooks/use-navigate';
+import { usePageLoadTypeStore } from '../hooks/use-store';
+import useViewport from '../hooks/use-viewport';
+import { applyConditionalStyle } from '../utils/apply';
+import Loading from '../components/index/loading';
+import CallToAction from '../components/index/call-to-action';
+import { breakpoints } from '../theme';
+
+type Props = {
+  info?: boolean;
+};
+
+const IndexPage = ({ info }: Props) => {
+  const onInfoPage = !!info;
+
+  const [waitingOnInitialLoad, setWaitingOnInitialLoad] = useState(!onInfoPage);
+  const [loaded, setLoaded] = useState(onInfoPage);
+  const [unload, setUnload] = useState(false);
+  const [showNavBar, setShowNavBar] = useState(onInfoPage);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  const [navBarHasAppeared, setNavBarHasAppeared] = useState(onInfoPage);
+
+  const navigate = useReactRouterNavigate();
+
+  const { playPageFullLoad, setPageToFullLoad } = usePageLoadTypeStore();
+
+  const handleNavigate = () => {
+    setUnload(true);
+  };
+
+  const [navigateToVideo] = useNavigate('/video', 500, [handleNavigate]);
+  const [navigateToPhoto] = useNavigate('/photos', 500, [handleNavigate]);
+  const [navigateToSoftware] = useNavigate('/software', 500, [handleNavigate]);
+
+  const topRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+  const { width: viewportWidth, height: viewportHeight } = useViewport();
+
+  const hideIntroPage = !!viewportWidth && viewportWidth <= breakpoints.lg;
+
+  useEffect(() => {
+    setLoaded(true);
+    setUnload(false);
+
+    if (onInfoPage || hideIntroPage) {
+      setWaitingOnInitialLoad(false);
+      infoRef.current?.scrollIntoView({ behavior: 'instant' });
+      return;
+    }
+
+    setWaitingOnInitialLoad(false);
+    setShowScrollIndicator(true);
+  }, [hideIntroPage]);
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const position = event.currentTarget.scrollTop;
+
+    if (position === viewportHeight) {
+      navigate('/info');
+      setNavBarHasAppeared(true);
+      setShowNavBar(true);
+    }
+    if (position === 0) {
+      navigate('/');
+      setShowScrollIndicator(true);
+    }
+
+    // Scrolling up from '/info' to '/'
+    if (onInfoPage && position < viewportHeight) {
+      if (!playPageFullLoad) {
+        setPageToFullLoad();
+      }
+
+      setShowNavBar(false);
+    }
+
+    // Scrolling down from '/' top '/info'
+    if (!onInfoPage && position > 0) {
+      setShowScrollIndicator(false);
+    }
+  };
+
   return (
-    <div className="w-screen h-screen flex items-center flex-col justify-center">
-      <div className="space-y-2 flex items-center flex-col">
-        <h1 className="font-bold font-heading text-4xl animate-slideIn">
-          VERSION GAMMA
-        </h1>
-        <p>This is a work in progress.</p>
-        <p>{count}</p>
-        <button
-          className="m-2 p-2 bg-slate-700 text-white rounded-xl hover:bg-slate-500 transition-colors"
-          onClick={() => setCount(count + 1)}
+    <>
+      <Loading unload={!unload} hide={onInfoPage} />
+      <div
+        // The opacity needs to be set directly on the html, as the css file
+        // is loaded only after the html file is loaded, and hence some things can be
+        // displayed when they're not supposed to
+        style={{ opacity: loaded ? 1 : 0 }}
+        className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
+          loaded && !hideIntroPage,
+          'overflow-y-auto',
+          'overflow-y-hidden'
+        )}`}
+        onScroll={handleScroll}
+        ref={topRef}
+      >
+        <ImageBackground
+          shown={!unload}
+          unload={unload && !waitingOnInitialLoad}
         >
-          Count
-        </button>
-        <Link
-          to="/video"
-          className="m-2 p-2 bg-slate-700 text-white rounded-xl hover:bg-slate-500 transition-colors"
+          <TitleBar shown={!unload} hide={waitingOnInitialLoad}>
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToVideo}
+            >
+              VIDEOS
+            </a>
+            ,{' '}
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToPhoto}
+            >
+              PHOTOS
+            </a>
+            ,{' '}
+            <a
+              className="hover:text-orange-300 transition-colors cursor-pointer"
+              onClick={navigateToSoftware}
+            >
+              SOFTWARE
+            </a>
+          </TitleBar>
+        </ImageBackground>
+        <ScrollDownIndicator
+          shown={showScrollIndicator && !unload}
+          hide={waitingOnInitialLoad || onInfoPage}
+          scrollElementRef={infoRef}
+        />
+        <div
+          ref={infoRef}
+          className="flex w-screen h-screen overflow-hidden items-center snap-center snap-always background-gradient"
         >
-          Go to Videos
-        </Link>
+          <ContentWrapper
+            unload={unload}
+            className="flex items-center justify-center w-screen"
+          >
+            <InfoPageContents />
+            <CallToAction shown={showNavBar} hide={false} />
+          </ContentWrapper>
+        </div>
       </div>
-    </div>
+      <NavigationBar
+        shown={showNavBar}
+        hide={!navBarHasAppeared || !onInfoPage}
+        handleNavigate={handleNavigate}
+        enterImmediately={!playPageFullLoad}
+      />
+    </>
   );
 };
 
-export default Index;
+export default IndexPage;
