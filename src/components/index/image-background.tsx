@@ -25,7 +25,7 @@ const ImageBackground = ({ shown, unload, children }: Props) => {
       style={{
         backgroundImage: 'url("/static/background.webp")',
         backgroundAttachment: 'fixed',
-        backgroundPosition: 'center center',
+        backgroundPosition: '60% center',
         backgroundSize: 'cover',
         ...props,
       }}
