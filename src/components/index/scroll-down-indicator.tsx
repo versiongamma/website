@@ -1,7 +1,7 @@
 import { animated, useSpring } from '@react-spring/web';
 import { FiArrowDownCircle } from 'react-icons/fi';
 
-const ENTER_DELAY = 2000;
+const ENTER_DELAY = 500;
 
 type Props = {
   shown: boolean;

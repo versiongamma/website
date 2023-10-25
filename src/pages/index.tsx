@@ -97,11 +97,7 @@ const IndexPage = ({ info }: Props) => {
         // is loaded only after the html file is loaded, and hence some things can be
         // displayed when they're not supposed to
         style={{ opacity: loaded ? 1 : 0 }}
-        className={`snap-y snap-mandatory snap w-screen h-screen ${applyConditionalStyle(
-          loaded && !hideIntroPage,
-          'overflow-y-auto',
-          'overflow-y-hidden'
-        )}`}
+        className={`snap-y snap-mandatory snap w-screen h-screen overflow-hidden`}
         onScroll={handleScroll}
         ref={topRef}
       >
