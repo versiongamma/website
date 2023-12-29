@@ -8,7 +8,8 @@ import { animated } from '@react-spring/web';
 
 const Image = ({ photo, index, onClick }: RenderImageProps) => {
   const { src, width, height } = photo;
-  const hasImageLoaded = useWaitForImgLoad(src);
+  const thumbnailSrc = src.replace('.jpg', 'l.jpg');
+  const hasImageLoaded = useWaitForImgLoad(thumbnailSrc);
 
   const [style] = useFadeIn(hasImageLoaded, !hasImageLoaded);
 
@@ -20,7 +21,7 @@ const Image = ({ photo, index, onClick }: RenderImageProps) => {
     <div className="p-2" style={{ width, height }}>
       {hasImageLoaded ? (
         <animated.img
-          src={src}
+          src={thumbnailSrc}
           style={style}
           onClick={handleClick}
           className="md:cursor-pointer md:hover:scale-95 transition-transform"
