@@ -13,6 +13,7 @@ type Props = {
 const Overlay = ({ src, onNext, onPrevious, onClickAway }: Props) => {
   const [unload, setUnload] = useState(false);
   const open = !!src;
+  const hugeQualitySrc = src?.replace('.jpg', 'h.jpg');
   const [style] = useFadeIn(!unload, !open, onClickAway);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Overlay = ({ src, onNext, onPrevious, onClickAway }: Props) => {
         <BiCaretLeftCircle className="w-16 h-16" />
       </button>
       <img
-        src={src ?? ''}
+        src={hugeQualitySrc ?? ''}
         onClick={(e) => {
           e.stopPropagation();
         }}

@@ -10,13 +10,13 @@ import axios from '../axios';
 import Background from '../components/background';
 import ContentWrapper from '../components/content-wrapper';
 import NavigationBar from '../components/navigation-bar';
-import Thumbnail, { ThumbnailSkeleton } from '../components/video/thumbnail';
 import { usePageLoadTypeStore } from '../hooks/use-store';
 import useWaitForImgLoad from '../hooks/use-wait-for-img-load';
 import { gradient } from '../theme';
+import VideoList from '../components/video/list';
 
-const GET_VIDEOS_URL = '/api/videos/versiongamma';
-const THUMBNAIL_SKELETON_COUNT = 20;
+const GET_ANALYSIS_VIDEOS_URL = '/api/videos/analysis';
+const GET_VIDEOGRAPHY_VIDEOS_URL = '/api/videos/videography';
 const BACKGROUND_IMAGES = [
   {
     url: '/static/video-bg.webp',
@@ -55,13 +55,23 @@ const VideoPage = () => {
 
   const backgroundImageLoaded = useWaitForImgLoad(backgroundImage.url);
 
-  const [videos, setVideos] = useState<YoutubeApiPlaylistResponse | null>(null);
+  const [analysisVideos, setAnalysisVideos] =
+    useState<YoutubeApiPlaylistResponse | null>(null);
+  const [videographyVideos, setVideographyVideos] =
+    useState<YoutubeApiPlaylistResponse | null>(null);
 
   // TODO: add error handling to response
   useEffect(() => {
-    axios.get<VideoResponse>(GET_VIDEOS_URL).then((res) => {
+    axios.get<VideoResponse>(GET_ANALYSIS_VIDEOS_URL).then((res) => {
       if (didVideoRequestSucceed(res.data)) {
-        setVideos(res.data.data);
+        setAnalysisVideos(res.data.data);
+        return;
+      }
+    });
+
+    axios.get<VideoResponse>(GET_VIDEOGRAPHY_VIDEOS_URL).then((res) => {
+      if (didVideoRequestSucceed(res.data)) {
+        setVideographyVideos(res.data.data);
         return;
       }
     });
@@ -79,46 +89,41 @@ const VideoPage = () => {
           hide={!backgroundImageLoaded}
           backgroundStyle={backgroundImage.style}
         >
-          <span className="flex items-center justify-center xl:justify-start space-x-2 col-span-full m-2 mt-8">
-            <img
-              src="/static/vgamma.webp"
-              className="rounded-full w-16 xl:w-24"
-            />
-            <p className="font-heading text-white text-2xl font-bold">
-              VERSION GAMMA
-            </p>
-          </span>
           <NoSSR>
-            <span
-              className="grid grid-cols-video-thumbnails-sm xl:grid-cols-video-thumbnails-md 2xl:grid-cols-video-thumbnails-lg
-             overflow-y-auto gap-6 justify-center "
-            >
-              {!videos &&
-                [...Array(THUMBNAIL_SKELETON_COUNT)].map((_e, i) => (
-                  <ThumbnailSkeleton key={i} />
-                ))}
-              {videos &&
-                videos.items.map(
-                  ({
-                    snippet: {
-                      title,
-                      thumbnails: {
-                        maxres: { url },
-                      },
-                      publishedAt,
-                      resourceId: { videoId },
-                    },
-                  }) => (
-                    <Thumbnail
-                      key={videoId}
-                      id={videoId}
-                      img={url}
-                      title={title}
-                      publishedDate={new Date(publishedAt)}
-                    />
-                  )
-                )}
-            </span>
+            <div className="flex justify-between w-full pt-10 pb-2 px-10 font-bold font-heading -md:hidden">
+              <h1>
+                <span className="text-2xl 2xl:text-4xl -xl:hidden">
+                  VIDEO GAME & MEDIA ANALYSIS
+                </span>
+                <span className="xl:hidden text-2xl">ANALYSIS</span>
+              </h1>
+              <h1>
+                <span className="text-2xl 2xl:text-4xl -xl:hidden">
+                  VIDEOGRAPHY (MUSIC VIDEOS, SHORTS, CAMERA TESTS)
+                </span>
+                <span className="xl:hidden text-2xl">VIDEOGRAPHY</span>
+              </h1>
+            </div>
+            {/*  Desktop View */}
+            <div className="flex w-full h-full overflow-y-auto -md:hidden">
+              <VideoList videos={analysisVideos} />
+              <VideoList videos={videographyVideos} />
+            </div>
+            {/*  Mobile View */}
+            <div className="flex justify-center w-full h-full overflow-y-auto md:hidden">
+              <VideoList
+                videos={
+                  analysisVideos && videographyVideos
+                    ? {
+                        items: [
+                          ...analysisVideos.items,
+                          ...videographyVideos.items,
+                        ],
+                      }
+                    : null
+                }
+              />
+            </div>
           </NoSSR>
         </ContentWrapper>
       </Background>
