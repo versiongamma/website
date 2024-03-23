@@ -99,7 +99,7 @@ const VideoPage = () => {
               </h1>
               <h1>
                 <span className="text-2xl 2xl:text-4xl -xl:hidden">
-                  VIDEOGRAPHY (MUSIC VIDEOS, SHORTS, CAMERA TESTS)
+                  VIDEOGRAPHY (SHORTS, MUSIC VIDEOS & MORE)
                 </span>
                 <span className="xl:hidden text-2xl">VIDEOGRAPHY</span>
               </h1>
