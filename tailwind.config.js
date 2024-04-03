@@ -17,8 +17,8 @@ module.exports = {
         lg: '976px',
         '-lg': { max: '976px' },
         xl: '1440px',
-        '-xl': { max: '1200px' },
-        '2xl': '2400px',
+        '-xl': { max: '1440px' },
+        '2xl': '1900px',
       },
       backgroundImage: {
         gradient:
@@ -35,7 +35,6 @@ module.exports = {
       gridTemplateColumns: {
         'video-thumbnails-sm': 'repeat(auto-fill, 320px)',
         'video-thumbnails-md': 'repeat(auto-fill, 480px)',
-        'video-thumbnails-lg': 'repeat(auto-fill, 640px)',
       },
       keyframes: {
         slideIn: {

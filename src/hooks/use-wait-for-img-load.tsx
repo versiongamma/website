@@ -4,6 +4,7 @@ const useWaitForImgLoad = (src: string, callback?: () => void) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    setLoaded(false);
     const preloadedImage = new Image();
     preloadedImage.onload = () => {
       setLoaded(true);
@@ -12,7 +13,7 @@ const useWaitForImgLoad = (src: string, callback?: () => void) => {
       }
     };
     preloadedImage.src = src;
-  }, [src, loaded, callback]);
+  }, [src, callback]);
 
   return loaded;
 };
