@@ -32,7 +32,14 @@ const PhotosPage = () => {
           }}
           className="overflow-y-auto"
         >
-          <Gallery />
+          {/* <Gallery /> */}
+          <div className="w-full h-full flex justify-center items-center">
+            <h1 className="text-2xl">
+              The gallery is currently unavailable. You can thank{' '}
+              <a href="https://cyclic.sh">cyclic.sh</a> for shutting down
+              without telling me for that 😠
+            </h1>
+          </div>
         </ContentWrapper>
       </Background>
       <NavigationBar
