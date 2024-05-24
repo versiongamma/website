@@ -2,10 +2,11 @@ services:
   node:
     image: "node:19-bullseye"
     user: "root"
-    network_mode: "host"
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
     volumes:
       - ./:/home/node/app
+    ports: 
+      - 4000:4000
     command: sh -c "yarn install --frozen-lockfile && yarn build && yarn start"

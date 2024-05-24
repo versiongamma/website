@@ -13,6 +13,8 @@ router.get('/api/photos', async (req, res) => {
     headers: {
       Authorization: 'CLIENT-ID ' + process.env.IMGUR_CLIENT_SECRET,
     },
+    referrer: "",
+    referrerPolicy: "no-referrer",
   })
     .then((res) => res.json())
     .then((photos) => photos);

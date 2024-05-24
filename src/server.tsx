@@ -101,8 +101,10 @@ app.get('*', async (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () =>
+const {PORT, HOST_IP} = process.env;
+
+app.listen(PORT, HOST_IP, () =>
   console.log(
-    `⚡️ Site is now live, server running on port ${process.env.PORT}`
+    `⚡️ Site is now live, server listening on ${HOST_IP}:${process.env.PORT}`
   )
 );
