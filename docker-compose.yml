@@ -1,6 +1,6 @@
 services:
   node:
-    image: "node:19-bullseye"
+    image: "node:22-alpine"
     user: "root"
     network_mode: "host"
     working_dir: /home/node/app
@@ -9,3 +9,5 @@ services:
     volumes:
       - ./:/home/node/app
     command: sh -c "yarn install --frozen-lockfile && yarn build && yarn start"
+    restart:
+      - on-failure

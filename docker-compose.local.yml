@@ -1,6 +1,6 @@
 services:
   node:
-    image: "node:19-bullseye"
+    image: "node:22-alpine"
     user: "root"
     working_dir: /home/node/app
     environment:
