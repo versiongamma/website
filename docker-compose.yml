@@ -9,5 +9,4 @@ services:
     volumes:
       - ./:/home/node/app
     command: sh -c "yarn install --frozen-lockfile && yarn build && yarn start"
-    restart:
-      - on-failure
+    restart: "on-failure"

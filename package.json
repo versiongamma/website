@@ -9,7 +9,8 @@
     "restart": "yarn build && yarn start",
     "start": "node build/server.js",
     "lint": "eslint",
-    "build": "rm -rf build && node esbuild.config.mjs"
+    "build": "rm -rf build && node esbuild.config.mjs",
+    "compose": "docker compose -f docker-compose.local.yml up -d"
   },
   "dependencies": {
     "@react-spring/web": "9.7.3",
