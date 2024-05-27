@@ -13,11 +13,14 @@ router.get('/api/photos', async (req, res) => {
     headers: {
       Authorization: 'CLIENT-ID ' + process.env.IMGUR_CLIENT_SECRET,
     },
-    referrer: "",
-    referrerPolicy: "no-referrer",
+    referrer: '',
+    referrerPolicy: 'no-referrer',
   })
     .then((res) => res.json())
     .then((photos) => photos);
+
+  const messageString = data.status === 200 ? `${data.data.images.length} images fetched` : data.message;
+  console.log(` - Imgur API responded with status [${data.status}]: ${messageString}`)
 
   if (!data) {
     res.status(500);
@@ -26,6 +29,10 @@ router.get('/api/photos', async (req, res) => {
       message: 'INTERNAL SERVER ERROR',
     };
     res.send(response);
+  }
+
+  if (data.status !== 200) {
+    res.send({ status: Status.Success, data: { images: [] } });
   }
 
   const response: PhotosResponse = {

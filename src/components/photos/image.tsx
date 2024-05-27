@@ -25,6 +25,7 @@ const Image = ({ photo, index, onClick }: RenderImageProps) => {
           style={style}
           onClick={handleClick}
           className="md:cursor-pointer md:hover:scale-95 transition-transform"
+          referrerPolicy="no-referrer"
         />
       ) : (
         <Skeleton className="w-full h-full">
