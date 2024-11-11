@@ -15,6 +15,7 @@ import {
 } from '../components/software/projects';
 import { usePageLoadTypeStore } from '../hooks/use-store';
 import useViewport from '../hooks/use-viewport';
+import Fergus from '../components/software/projects/fergus';
 
 const BREAKPOINT = 800;
 
@@ -44,6 +45,7 @@ const SoftwarePage = () => {
             <ScreenWarning />
           ) : (
             <>
+              <Fergus />
               <Joyous />
               <GameDB />
               <Website />

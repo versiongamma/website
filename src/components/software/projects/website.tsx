@@ -11,7 +11,7 @@ const Website = () => (
   <ProjectView
     direction="left"
     title="Website"
-    copy="You know, this website itself is a bit of a project. I mostly work with dynamic web apps, so this website
+    copy="This website itself is a bit of a project. I mostly work with dynamic web apps, so this website
     was a chance to work on more static web content. While all you might see is the finished site, the server that's
     serving you all this content is a complete custom solution using Express and React Server Side Rendering"
     icons={[SiReactrouter, SiTailwindcss, SiExpress, SiReact]}

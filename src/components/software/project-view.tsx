@@ -106,7 +106,7 @@ const PreviewImage = ({ direction, previewImgSrc }: PreviewImageProps) => {
 
   if (!imageLoaded) {
     return (
-      <Skeleton className="w-[600px] h-[445px] 2xl:w-[800px] 2xl:h-[595px]" />
+      <Skeleton className="w-[600px] h-[480px] 2xl:w-[800px] 2xl:h-[600px]" />
     );
   }
 
@@ -118,7 +118,7 @@ const PreviewImage = ({ direction, previewImgSrc }: PreviewImageProps) => {
         'justify-end'
       )}`}
     >
-      <img className="rounded-xl w-[600px] 2xl:w-[800px]" src={previewImgSrc} />
+      <img className="rounded-xl max-h-[480px] 2xl:max-h-[600px]" src={previewImgSrc} />
     </span>
   );
 };
