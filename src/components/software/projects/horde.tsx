@@ -8,7 +8,11 @@ const Horde = () => (
     title="Horde"
     copy="Horde is a round based survival twin stick shooter. It's not a very complex game, but everything was developed
     from scratch (well, I didn't hand develop OpenGL, but you know what I mean. I didn't use a game engine)."
-    icons={[SiCplusplus, SiOpengl, SiFmod]}
+    icons={[
+      { icon: SiCplusplus, name: 'C++' },
+      { icon: SiOpengl, name: 'OpenGL' },
+      { icon: SiFmod, name: 'FMOD' },
+    ]}
     link={
       <a
         className="text-link text-lg 2xl:text-2xl"

@@ -1,12 +1,14 @@
 import {
-  SiTypescript,
-  SiNodedotjs,
-  SiReact,
-  SiAmazonaws,
-  SiPhp,
+  SiAmazonapigateway,
+  SiAmazons3,
+  SiDocker,
   SiFastify,
-  SiGithub,
+  SiGithubactions,
+  SiNodedotjs,
+  SiPhp,
+  SiReact,
   SiTerraform,
+  SiTypescript,
 } from 'react-icons/si';
 
 import ProjectView from '../project-view';
@@ -25,14 +27,16 @@ const Fergus = () => (
     to 2 way syncing with various accounting software (such as Xero, MYOB and Quickbooks) using their various APIs. We've also developed an in house public facing API for use by our partners
     to fetch and ingest data from and into our systems"
     icons={[
-      SiTypescript,
-      SiPhp,
-      SiNodedotjs,
-      SiFastify,
-      SiReact,
-      SiAmazonaws,
-      SiGithub,
-      SiTerraform,
+      { icon: SiTypescript, name: 'TypeScript' },
+      { icon: SiPhp, name: 'PHP' },
+      { icon: SiNodedotjs, name: 'NodeJS' },
+      { icon: SiFastify, name: 'Fastify' },
+      { icon: SiReact, name: 'React' },
+      { icon: SiAmazons3, name: 'AWS S3' },
+      { icon: SiAmazonapigateway, name: 'AWS API Gateway' },
+      { icon: SiGithubactions, name: 'Github Actions' },
+      { icon: SiTerraform, name: 'Terraform' },
+      { icon: SiDocker, name: 'Docker' },
     ]}
     link={
       <a

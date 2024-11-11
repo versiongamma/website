@@ -3,6 +3,8 @@ import {
   SiExpress,
   SiReactrouter,
   SiTailwindcss,
+  SiTypescript,
+  SiDocker,
 } from 'react-icons/si';
 
 import ProjectView from '../project-view';
@@ -14,7 +16,13 @@ const Website = () => (
     copy="This website itself is a bit of a project. I mostly work with dynamic web apps, so this website
     was a chance to work on more static web content. While all you might see is the finished site, the server that's
     serving you all this content is a complete custom solution using Express and React Server Side Rendering"
-    icons={[SiReactrouter, SiTailwindcss, SiExpress, SiReact]}
+    icons={[
+      { icon: SiReactrouter, name: 'React Router' },
+      { icon: SiTailwindcss, name: 'Tailwind CSS' },
+      { icon: SiExpress, name: 'Express' },
+      { icon: SiReact, name: 'React' },
+      { icon: SiTypescript, name: 'TypeScript' },
+    ]}
     link={
       <a
         className="text-link text-lg 2xl:text-2xl"

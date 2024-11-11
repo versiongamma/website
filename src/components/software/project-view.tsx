@@ -6,16 +6,22 @@ import Skeleton from '../skeleton';
 type Direction = 'left' | 'right';
 
 type TechStackIconProps = {
-  icons: IconType[];
+  icons: {
+    icon: IconType,
+    name: string,
+  }[]
 };
 
 const TechStackIcons = ({ icons }: TechStackIconProps) => (
-  <span className="flex space-x-3">
-    {icons.map((Icon, index) => (
-      <Icon
-        key={index}
-        className="xl:w-[48px] xl:h-[48px] w-[24px] h-[24px] text-white"
-      />
+  <span className="grid grid-cols-5 gap-4">
+    {icons.map(({icon: Icon, name}, index) => (
+      <span className='has-tooltip'>
+        <span className='tooltip'>{name}</span>
+        <Icon
+          key={index}
+          className="xl:w-[48px] xl:h-[48px] w-[24px] h-[24px] text-white"
+        />
+      </span>
     ))}
   </span>
 );

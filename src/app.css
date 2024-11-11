@@ -46,4 +46,16 @@ body {
   .text-link {
     @apply text-orange-300 hover:text-orange-500 transition-colors cursor-pointer;
   }
+
+  .tooltip {
+    @apply invisible opacity-0 absolute transition-opacity z-50 translate-x-[-50%] left-[50%] text-center translate-y-[-120%] w-28 p-2 rounded-xl bg-neutral-600;
+  }
+
+  .has-tooltip {
+    @apply relative;
+  }
+  
+  .has-tooltip:hover .tooltip {
+    @apply visible opacity-100 ;
+  }
 }
