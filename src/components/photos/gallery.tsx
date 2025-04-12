@@ -5,7 +5,7 @@ import { RenderImageProps } from 'react-photo-gallery';
 
 import ReactPhotoGallery, { PhotoClickHandler } from 'react-photo-gallery';
 import {
-  ImgurApiResponse,
+  Image as ApiImage,
   PhotosResponse,
 } from '../../api/routes/photos/types';
 import { didPhotosRequestSucceed } from '../../api/routes/photos/utils';
@@ -20,7 +20,7 @@ const Gallery = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
-  const [photos, setPhotos] = useState<ImgurApiResponse | null>(null);
+  const [photos, setPhotos] = useState<ApiImage[] | null>(null);
 
   const ImageRender = useCallback(
     (props: RenderImageProps) => <Image {...props} />,
@@ -30,21 +30,20 @@ const Gallery = () => {
   useEffect(() => {
     axios.get<PhotosResponse>(GET_IMAGES_URL).then((res) => {
       if (didPhotosRequestSucceed(res.data)) {
-        setPhotos(res.data.data);
+        const shuffled = res.data.data
+          .map(value => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value)
+        setPhotos(shuffled);
+
         return;
       }
     });
   }, []);
 
-  const photosForGallery =
-    photos?.images.map(({ link, ...photo }) => ({
-      src: link,
-      ...photo,
-    })) ?? null;
+  const [style] = useFadeIn(!!photos);
 
-  const [style] = useFadeIn(!!photosForGallery);
-
-  if (!photosForGallery) {
+  if (!photos) {
     return null;
   }
 
@@ -60,7 +59,7 @@ const Gallery = () => {
         return null;
       }
 
-      if (index >= photosForGallery.length - 1) {
+      if (index >= photos.length - 1) {
         return 0;
       }
 
@@ -76,7 +75,7 @@ const Gallery = () => {
       }
 
       if (index === 0) {
-        return photosForGallery.length - 1;
+        return photos.length - 1;
       }
 
       return index - 1;
@@ -89,19 +88,20 @@ const Gallery = () => {
 
   const selectedPhotoSrc =
     selectedImageIndex !== null
-      ? photosForGallery[selectedImageIndex].src
+      ? photos[selectedImageIndex].src
       : null;
 
   return (
     <NoSSR>
       <animated.div style={style}>
         <ReactPhotoGallery
-          photos={photosForGallery}
+          photos={photos}
           onClick={handlePhotoClick}
           renderImage={ImageRender}
         />
         <Overlay
-          src={selectedPhotoSrc}
+          allSrcs={photos.map(({ src }) => src)}
+          selectedSrc={selectedPhotoSrc}
           onNext={handleNext}
           onPrevious={handlePrevious}
           onClickAway={handleClickAway}
@@ -112,3 +112,4 @@ const Gallery = () => {
 };
 
 export default Gallery;
+

@@ -1,16 +1,13 @@
 import { ErrorResponse, Status } from "../../types";
 
-export type ImgurApiResponse = {
-  images: {
-    id: string;
-    width: number;
-    height: number;
-    link: string;
-  }[];
+export type Image = {
+  src: string;
+  width: number;
+  height: number;
 };
 
 export type PhotosSuccessResponse = {
-  data: ImgurApiResponse;
+  data: Image[];
   status: Status.Success;
 };
 

@@ -8,7 +8,7 @@ import { animated } from '@react-spring/web';
 
 const Image = ({ photo, index, onClick }: RenderImageProps) => {
   const { src, width, height } = photo;
-  const thumbnailSrc = src.replace('.jpg', 'l.jpg');
+  const thumbnailSrc = src.replace('.jpg', '.md.jpg');
   const hasImageLoaded = useWaitForImgLoad(thumbnailSrc);
 
   const [style] = useFadeIn(hasImageLoaded, !hasImageLoaded);

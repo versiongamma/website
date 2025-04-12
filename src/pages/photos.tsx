@@ -32,9 +32,7 @@ const PhotosPage = () => {
           }}
           className="overflow-y-auto"
         >
-          <div className="w-full h-full flex items-center justify-center">
-          <h1 className='font-heading text-2xl text-center'>This page is currently down for maintenance <br />until I find a new image host</h1>
-          </div>
+          <Gallery />
         </ContentWrapper>
       </Background>
       <NavigationBar
