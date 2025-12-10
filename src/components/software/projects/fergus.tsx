@@ -18,12 +18,12 @@ const Fergus = () => (
     direction="right"
     logo={
       <img
-        src="https://fergus.com/hubfs/Logo%20files/fergus-horizontal-white@2x.png"
+        src="https://fergus.com/wp-content/uploads/2023/11/fergus-nav-logo.webp"
         width={256}
       />
     }
-    copy="My current gig is at Fergus, a company that creates job management software for Tradies (Electrician/Plumber types for those of you unfamiliar with the AUNZ slang). 
-    I currently work on the integrations team, developing solutions to connect other software tradies might use to our product, ranging from ingesting supplier price book and invoice documents
+    copy="My current gig is at Fergus, a company that creates job management software for Tradies. 
+    Currently I work on improving our core product, creating new features for both our web app and our React Native mobile app. I also previously worked on the integrations team, developing solutions to connect other software tradies might use to our product, ranging from ingesting supplier price book and invoice documents
     to 2 way syncing with various accounting software (such as Xero, MYOB and Quickbooks) using their various APIs. We've also developed an in house public facing API for use by our partners
     to fetch and ingest data from and into our systems"
     icons={[
@@ -48,7 +48,7 @@ const Fergus = () => (
         fergus.com
       </a>
     }
-    previewImgSrc="https://fergus.com/hubfs/NZ-Hero.png"
+    previewImgSrc="https://fergus.com/wp-content/uploads/2025/10/Group-4.png"
   />
 );
 
